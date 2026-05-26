@@ -7,6 +7,6 @@
     "dev:frontend": "npx live-server frontend",
     "dev:backend": "cd backend && npm run dev",
     "dev:admin": "cd admin && npm start",
-    "build": "cd admin && npm run build"
+    "build": "cd admin && npm install && npm run build"
   }
 }
