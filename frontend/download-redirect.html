@@ -355,11 +355,19 @@ pause
       const downloadUrl = dlInfo?.downloadUrl;
       const fileName = `${game.title.replace(/[^a-zA-Z0-9]/g, '_')}_Setup.bat`;
 
-      // Show expected file size from metadata
       totalText.textContent = dlInfo?.fileSize || '? GB';
 
-      // Try fetching from CDN with real streaming progress
-      if (downloadUrl && downloadUrl !== '#') {
+      if (downloadUrl && downloadUrl !== '#' && downloadUrl !== '') {
+        // External URL (GitHub, etc.) — redirect directly
+        if (downloadUrl.startsWith('http')) {
+          document.getElementById('dlStatusTitle').textContent = 'Yönlendiriliyor...';
+          document.getElementById('dlStatusDesc').textContent = `${game.title} indirme sayfasına yönlendiriliyorsunuz.`;
+          fill.style.width = '100%';
+          setTimeout(() => { window.location.href = downloadUrl; }, 1500);
+          return;
+        }
+
+        // Local CDN URL — fetch with real streaming progress
         try {
           const response = await fetch(downloadUrl);
           if (!response.ok) throw new Error('HTTP ' + response.status);
@@ -398,7 +406,6 @@ pause
             }
           }
 
-          // Download the real file
           const blob = new Blob(chunks);
           const ext = downloadUrl.split('.').pop().split('?')[0] || 'bat';
           const realName = `${game.title.replace(/[^a-zA-Z0-9]/g, '_')}.${ext}`;
@@ -406,13 +413,13 @@ pause
           onDownloadComplete(realName);
           return;
         } catch (err) {
-          console.warn('CDN fetch failed, falling back to installer generator:', err);
+          console.warn('CDN fetch failed:', err);
         }
       }
 
-      // Fallback: generate and download installer .bat with real progress
+      // Fallback: generate installer .bat
       document.getElementById('dlStatusTitle').textContent = 'Kurulum dosyası hazırlanıyor...';
-      document.getElementById('dlStatusDesc').textContent = 'Bu oyun için CDN bağlantısı bulunamadı, kurulum aracı indiriliyor.';
+      document.getElementById('dlStatusDesc').textContent = 'İndirme bağlantısı hazırlanıyor...';
 
       const content = generateInstallerFile();
       const blob = new Blob([content], { type: 'application/octet-stream' });

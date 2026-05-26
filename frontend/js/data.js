@@ -339,8 +339,159 @@ const WADO = {
         min: { os: "Windows 10", cpu: "Intel Core i3-8100", ram: "8 GB", gpu: "GTX 960", storage: "75 GB" },
         rec: { os: "Windows 10", cpu: "Intel Core i5-8600", ram: "16 GB", gpu: "RTX 2060", storage: "75 GB" }
       }
+    },
+    {
+      id: 21, title: "SuperTuxKart", category: "racing", rating: 8.5, year: 2024,
+      image: "https://raw.githubusercontent.com/supertuxkart/stk-code/master/media/supertuxkart.jpg",
+      bg: "https://raw.githubusercontent.com/supertuxkart/stk-code/master/media/supertuxkart.jpg",
+      description: "SuperTuxKart, açık kaynaklı, 3D bir kart yarış oyunudur. Tux ve arkadaşlarıyla eğlenceli pistlerde yarışın.",
+      features: ["Çok Oyunculu", "3D Grafik", "Karting", "Açık Kaynak"],
+      trailer: "",
+      tags: ["Yarış", "Arcade", "Çok Oyunculu"],
+      releaseDate: "2024",
+      developer: "SuperTuxKart Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 22, title: "Minecraft4Windows", category: "sandbox", rating: 8, year: 2024,
+      image: "https://raw.githubusercontent.com/Minecraft4Windows/minecraft4windows/main/icon.png",
+      bg: "https://raw.githubusercontent.com/Minecraft4Windows/minecraft4windows/main/icon.png",
+      description: "Minecraft'ın açık kaynaklı bir versiyonu. Windows için optimize edilmiş, ücretsiz ve modlanabilir.",
+      features: ["Açık Dünya", "Sandbox", "Mod Desteği", "Çok Oyunculu"],
+      trailer: "",
+      tags: ["Sandbox", "Açık Dünya", "Yaratıcı"],
+      releaseDate: "2024",
+      developer: "Minecraft4Windows",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 23, title: "Battle for Wesnoth", category: "strategy", rating: 9, year: 2024,
+      image: "https://raw.githubusercontent.com/wesnoth/wesnoth/master/icons/icon.png",
+      bg: "https://raw.githubusercontent.com/wesnoth/wesnoth/master/icons/icon.png",
+      description: "Battle for Wesnoth, sıra tabanlı bir strateji oyunudur. Fantastik bir dünyada ordular yönetin ve destansı savaşlara katılın.",
+      features: ["Sıra Tabanlı", "Strateji", "Kampanya", "Çok Oyunculu"],
+      trailer: "",
+      tags: ["Strateji", "Sıra Tabanlı", "Fantezi"],
+      releaseDate: "2024",
+      developer: "Wesnoth Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 24, title: "OpenTTD", category: "simulation", rating: 9.2, year: 2024,
+      image: "https://raw.githubusercontent.com/OpenTTD/OpenTTD/master/media/openttd.ico",
+      bg: "https://raw.githubusercontent.com/OpenTTD/OpenTTD/master/media/openttd.ico",
+      description: "OpenTTD, Transport Tycoon Deluxe oyununun açık kaynaklı remake'idir. Ulaşım imparatorluğunuzu inşa edin.",
+      features: ["Simülasyon", "Ekonomi", "Harita Düzenleyici", "Çok Oyunculu"],
+      trailer: "",
+      tags: ["Simülasyon", "Ekonomi", "Ulaşım"],
+      releaseDate: "2024",
+      developer: "OpenTTD Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 25, title: "Endless Sky", category: "simulation", rating: 8.7, year: 2024,
+      image: "https://raw.githubusercontent.com/endless-sky/endless-sky/master/images/icon.png",
+      bg: "https://raw.githubusercontent.com/endless-sky/endless-sky/master/images/icon.png",
+      description: "Endless Sky, uzay ticareti ve savaş temalı açık kaynaklı bir 2D uzay simülasyon oyunudur.",
+      features: ["Uzay Keşfi", "Ticaret", "Savaş", "Açık Dünya"],
+      trailer: "",
+      tags: ["Uzay", "Simülasyon", "Ticaret", "Açık Dünya"],
+      releaseDate: "2024",
+      developer: "Endless Sky Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 26, title: "MultiMC", category: "tools", rating: 8.5, year: 2024,
+      image: "https://raw.githubusercontent.com/MultiMC/MultiMC5/master/launcher/resources/multimc/multimc.png",
+      bg: "https://raw.githubusercontent.com/MultiMC/MultiMC5/master/launcher/resources/multimc/multimc.png",
+      description: "MultiMC, Minecraft için ücretsiz, açık kaynaklı bir launcher'dır. Birden fazla sürümü ve modu yönetin.",
+      features: ["Mod Yönetimi", "Sürüm Yönetimi", "Açık Kaynak"],
+      trailer: "",
+      tags: ["Araç", "Minecraft", "Launcher"],
+      releaseDate: "2024",
+      developer: "MultiMC Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 27, title: "Mindustry", category: "strategy", rating: 9.3, year: 2024,
+      image: "https://raw.githubusercontent.com/mindustrygame/Mindustry/master/core/assets-raw/sprites/icon.png",
+      bg: "https://raw.githubusercontent.com/mindustrygame/Mindustry/master/core/assets-raw/sprites/icon.png",
+      description: "Mindustry, bir fabrika otomasyon oyunu ile tower defense türünü birleştiren açık kaynaklı bir oyundur.",
+      features: ["Fabrika Otomasyonu", "Tower Defense", "Sandbox", "Çok Oyunculu"],
+      trailer: "",
+      tags: ["Strateji", "Tower Defense", "Otomasyon", "Sandbox"],
+      releaseDate: "2024",
+      developer: "Anuken",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 28, title: "Zero-K", category: "strategy", rating: 8.8, year: 2024,
+      image: "https://raw.githubusercontent.com/Zero-K/Zero-K/master/icons/icon.png",
+      bg: "https://raw.githubusercontent.com/Zero-K/Zero-K/master/icons/icon.png",
+      description: "Zero-K, tamamen ücretsiz açık kaynaklı bir gerçek zamanlı strateji oyunudur. Fizik tabanlı savaşlar ve özelleştirilebilir birimler.",
+      features: ["RTS", "Fizik Motoru", "Birim Özelleştirme", "Çok Oyunculu"],
+      trailer: "",
+      tags: ["Strateji", "RTS", "Bilim Kurgu"],
+      releaseDate: "2024",
+      developer: "Zero-K Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 29, title: "Hedgewars", category: "action", rating: 8.3, year: 2024,
+      image: "https://raw.githubusercontent.com/hedgewars/hedgewars/master/share/hedgewars/Data/Images/icon.png",
+      bg: "https://raw.githubusercontent.com/hedgewars/hedgewars/master/share/hedgewars/Data/Images/icon.png",
+      description: "Hedgewars, Worms serisine benzer, sıra tabanlı bir topçu oyunudur. Sevimli kirpilerle komik savaşlar.",
+      features: ["Sıra Tabanlı", "Fizik Motoru", "Özelleştirme", "Çok Oyunculu"],
+      trailer: "",
+      tags: ["Aksiyon", "Sıra Tabanlı", "Çok Oyunculu"],
+      releaseDate: "2024",
+      developer: "Hedgewars Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
+    },
+    {
+      id: 30, title: "FlightGear", category: "simulation", rating: 9, year: 2024,
+      image: "https://raw.githubusercontent.com/flightgear/flightgear/master/icons/icon.png",
+      bg: "https://raw.githubusercontent.com/flightgear/flightgear/master/icons/icon.png",
+      description: "FlightGear, profesyonel seviyede, açık kaynaklı bir uçuş simülatörüdür. Gerçekçi fizik ve dünya haritası.",
+      features: ["Gerçekçi Fizik", "Dünya Haritası", "Çok Oyunculu", "Açık Kaynak"],
+      trailer: "",
+      tags: ["Simülasyon", "Uçuş", "Gerçekçi"],
+      releaseDate: "2024",
+      developer: "FlightGear Team",
+      sysReq: {
+        min: { os: "Windows 7/8/10", cpu: "2.0 GHz", ram: "2 GB", gpu: "Intel HD Graphics", storage: "Bilinmiyor" },
+        rec: { os: "Windows 10/11", cpu: "3.0 GHz", ram: "4 GB", gpu: "Dedicated GPU", storage: "Bilinmiyor" }
+      }
     }
-  ],
+]
+
 
   reviews: [
     { id: 1, gameId: 2, title: "Elden Ring: Bir Çağın Başlangıcı", score: 9.5, author: "Wado Editör", excerpt: "FromSoftware yine zirvede. Elden Ring açık dünya ve zorlu dövüşlerle tüm beklentileri karşılıyor.", image: "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/header.jpg", date: "2024-12-15" },
@@ -390,8 +541,19 @@ const WADO = {
     17: { fileSize: '10 GB', type: 'paid', downloads: 12600, downloadUrl: 'https://cdn.wado.com/games/stray.zip' },
     18: { fileSize: '85 GB', type: 'free', downloads: 89700, downloadUrl: 'https://cdn.wado.com/games/cs2-setup.exe' },
     19: { fileSize: '40 GB', type: 'paid', downloads: 23400, downloadUrl: 'https://cdn.wado.com/games/palworld.part1.rar' },
-    20: { fileSize: '75 GB', type: 'paid', downloads: 17600, downloadUrl: 'https://cdn.wado.com/games/ghost-of-tsushima.part1.rar' }
-  },
+     20: { fileSize: '75 GB', type: 'paid', downloads: 17600, downloadUrl: 'https://cdn.wado.com/games/ghost-of-tsushima.part1.rar' },
+     21: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/supertuxkart/stk-code/releases/latest' },
+    22: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/Minecraft4Windows/minecraft4windows/releases/latest' },
+    23: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/wesnoth/wesnoth/releases/latest' },
+    24: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/OpenTTD/OpenTTD/releases/latest' },
+    25: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/endless-sky/endless-sky/releases/latest' },
+    26: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/MultiMC/MultiMC5/releases/latest' },
+    27: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/mindustrygame/Mindustry/releases/latest' },
+    28: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/Zero-K/Zero-K/releases/latest' },
+    29: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/hedgewars/hedgewars/releases/latest' },
+    30: { fileSize: 'Bilinmiyor', type: 'free', downloads: 0, downloadUrl: 'https://github.com/flightgear/flightgear/releases/latest' }
+}
+
 
   getGame(id) { return this.games.find(g => g.id === id); },
   getGamesByCategory(cat) { return cat === 'all' ? this.games : this.games.filter(g => g.category === cat); },
