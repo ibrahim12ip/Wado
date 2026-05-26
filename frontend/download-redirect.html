@@ -485,6 +485,15 @@ pause
       document.getElementById('dlDetailCount').textContent = (dlInfo?.downloads || 0).toLocaleString();
     }
 
+    function trackDownload(gameId) {
+      try {
+        const stats = JSON.parse(localStorage.getItem('wado_download_stats') || '{}');
+        if (!stats[gameId]) stats[gameId] = { total: 0 };
+        stats[gameId].total = (stats[gameId].total || 0) + 1;
+        localStorage.setItem('wado_download_stats', JSON.stringify(stats));
+      } catch (e) {}
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       initDownloadPage();
       document.getElementById('dlStartBtn').addEventListener('click', (e) => {
