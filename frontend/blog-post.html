@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Yazısı - Wado</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="particles-js"></div>
+  <nav class="navbar glass-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><span class="logo-text">W</span><span class="logo-sub">ado</span></a>
+      <div class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <a href="games.html" class="nav-link"><i class="fas fa-gamepad"></i> Oyunlar</a>
+        <a href="downloads.html" class="nav-link"><i class="fas fa-download"></i> İndir</a>
+        <a href="blog.html" class="nav-link active"><i class="fas fa-newspaper"></i> Blog</a>
+        <a href="reviews.html" class="nav-link"><i class="fas fa-star"></i> İncelemeler</a>
+        <a href="news.html" class="nav-link"><i class="fas fa-bolt"></i> Haberler</a>
+        <a href="system-requirements.html" class="nav-link"><i class="fas fa-microchip"></i> Sistem Gereksinimleri</a>
+      </div>
+      <div class="nav-actions">
+        <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
+        <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <a href="profile.html" class="auth-btn"><i class="fas fa-user"></i> <span>Giriş Yap</span></a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="blogPostContainer">
+    <div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Yükleniyor...</div>
+  </main>
+
+  <footer class="footer glass-nav">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo"><span class="logo-text">W</span><span class="logo-sub">ado</span></div>
+        <p>Oyun dünyasının kalbi burada atıyor.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-discord"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-steam"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Sayfalar</h4>
+        <a href="games.html">Oyunlar</a>
+        <a href="blog.html">Blog</a>
+        <a href="reviews.html">İncelemeler</a>
+        <a href="news.html">Haberler</a>
+        <a href="system-requirements.html">Sistem Gereksinimleri</a>
+      </div>
+      <div class="footer-links">
+        <h4>Kategoriler</h4>
+        <a href="games.html?category=action">Action</a>
+        <a href="games.html?category=rpg">RPG</a>
+        <a href="games.html?category=horror">Horror</a>
+        <a href="games.html?category=racing">Racing</a>
+        <a href="games.html?category=multiplayer">Multiplayer</a>
+      </div>
+      <div class="footer-links">
+        <h4>İletişim</h4>
+        <a href="mailto:info@wado.com"><i class="fas fa-envelope"></i> info@wado.com</a>
+        <a href="#"><i class="fas fa-comment"></i> Canlı Destek</a>
+        <a href="#"><i class="fas fa-file-contract"></i> Gizlilik Politikası</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 Wado. Tüm hakları saklıdır.</p></div>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/blog.js"></script>
+</body>
+</html>

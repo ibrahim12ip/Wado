@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wado - Oyun Dünyasının Kalbi</title>
+  <meta name="description" content="Wado - En yeni oyun haberleri, incelemeler, sistem gereksinimleri ve oyun rehberleri. Oyun dünyasının kalbi burada atıyor.">
+  <meta name="keywords" content="oyun, gaming, wado, oyun haberleri, oyun incelemeleri, sistem gereksinimleri, oyun blog">
+  <link rel="canonical" href="https://wado.vercel.app">
+  <meta property="og:title" content="Wado - Oyun Dünyasının Kalbi">
+  <meta property="og:description" content="En yeni oyun haberleri, incelemeler ve sistem gereksinimleri">
+  <meta property="og:image" content="https://wado.vercel.app/assets/images/og-image.jpg">
+  <meta property="og:url" content="https://wado.vercel.app">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Wado",
+    "description": "Modern Gaming Blog Platform",
+    "url": "https://wado.vercel.app"
+  }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar glass-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-text">W</span>
+        <span class="logo-sub">ado</span>
+      </a>
+      <div class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link active"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <a href="games.html" class="nav-link"><i class="fas fa-gamepad"></i> Oyunlar</a>
+        <a href="downloads.html" class="nav-link"><i class="fas fa-download"></i> İndir</a>
+        <a href="blog.html" class="nav-link"><i class="fas fa-newspaper"></i> Blog</a>
+        <a href="reviews.html" class="nav-link"><i class="fas fa-star"></i> İncelemeler</a>
+        <a href="news.html" class="nav-link"><i class="fas fa-bolt"></i> Haberler</a>
+        <a href="system-requirements.html" class="nav-link"><i class="fas fa-microchip"></i> Sistem Gereksinimleri</a>
+      </div>
+      <div class="nav-actions">
+        <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
+        <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <a href="profile.html" class="auth-btn"><i class="fas fa-user"></i> <span>Giriş Yap</span></a>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+    <div class="search-bar" id="searchBar">
+      <input type="text" id="searchInput" placeholder="Oyun, blog makalesi veya haber ara...">
+      <button id="searchSubmit"><i class="fas fa-arrow-right"></i></button>
+    </div>
+  </nav>
+
+  <!-- Hero Slider -->
+  <section class="hero-section">
+    <div class="swiper heroSwiper">
+      <div class="swiper-wrapper" id="heroSlider">
+        <!-- Slides will be populated by JS -->
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </section>
+
+  <!-- Popular Games -->
+  <section class="section" id="popularGames">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-fire"></i> Popüler Oyunlar</h2>
+      <a href="games.html" class="section-link">Tümünü Gör <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="swiper gamesSwiper">
+      <div class="swiper-wrapper" id="popularGamesContainer">
+        <!-- Will be populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest News -->
+  <section class="section" id="latestNews">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-bolt"></i> Son Haberler</h2>
+      <a href="news.html" class="section-link">Tüm Haberler <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="news-grid" id="newsContainer">
+      <!-- Will be populated by JS -->
+    </div>
+  </section>
+
+  <!-- Editor's Choice -->
+  <section class="section" id="editorsChoice">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-crown"></i> Editörün Seçimi</h2>
+    </div>
+    <div class="featured-grid" id="editorsChoiceContainer">
+      <!-- Will be populated by JS -->
+    </div>
+  </section>
+
+  <!-- Top Downloads -->
+  <section class="section" id="topDownloads">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-download"></i> En Çok İndirilenler</h2>
+      <a href="downloads.html" class="section-link">Tümünü Gör <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="games-grid" id="topDownloadsContainer">
+      <!-- Will be populated by JS -->
+    </div>
+  </section>
+
+  <!-- Latest Reviews -->
+  <section class="section" id="latestReviews">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-star"></i> Son İncelemeler</h2>
+      <a href="reviews.html" class="section-link">Tüm İncelemeler <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="reviews-grid" id="reviewsContainer">
+      <!-- Will be populated by JS -->
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-tags"></i> Kategoriler</h2>
+    </div>
+    <div class="categories-grid">
+      <a href="games.html?category=action" class="category-card" data-category="action">
+        <i class="fas fa-crosshairs"></i>
+        <span>Action</span>
+      </a>
+      <a href="games.html?category=horror" class="category-card" data-category="horror">
+        <i class="fas fa-ghost"></i>
+        <span>Horror</span>
+      </a>
+      <a href="games.html?category=open-world" class="category-card" data-category="open-world">
+        <i class="fas fa-globe"></i>
+        <span>Open World</span>
+      </a>
+      <a href="games.html?category=racing" class="category-card" data-category="racing">
+        <i class="fas fa-car"></i>
+        <span>Racing</span>
+      </a>
+      <a href="games.html?category=rpg" class="category-card" data-category="rpg">
+        <i class="fas fa-hat-wizard"></i>
+        <span>RPG</span>
+      </a>
+      <a href="games.html?category=multiplayer" class="category-card" data-category="multiplayer">
+        <i class="fas fa-users"></i>
+        <span>Multiplayer</span>
+      </a>
+      <a href="games.html?category=indie" class="category-card" data-category="indie">
+        <i class="fas fa-star"></i>
+        <span>Indie</span>
+      </a>
+      <a href="games.html?category=survival" class="category-card" data-category="survival">
+        <i class="fas fa-skull"></i>
+        <span>Survival</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Blog Posts -->
+  <section class="section" id="latestBlog">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-newspaper"></i> Son Blog Yazıları</h2>
+      <a href="blog.html" class="section-link">Tüm Yazılar <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="blog-grid" id="blogContainer">
+      <!-- Will be populated by JS -->
+    </div>
+  </section>
+
+  <!-- System Requirements Teaser -->
+  <section class="section sys-req-section">
+    <div class="sys-req-banner glass">
+      <div class="sys-req-content">
+        <h2><i class="fas fa-microchip"></i> Sistem Gereksinimlerini Kontrol Et</h2>
+        <p>Oyununuzu seçin ve sisteminizin uyumlu olup olmadığını görün.</p>
+        <a href="system-requirements.html" class="btn-primary">Hemen Kontrol Et</a>
+      </div>
+      <div class="sys-req-visual">
+        <i class="fas fa-desktop"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer glass-nav">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-text">W</span>
+          <span class="logo-sub">ado</span>
+        </div>
+        <p>Oyun dünyasının kalbi burada atıyor. En yeni haberler, incelemeler ve rehberler.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-discord"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-steam"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+          <h4>Sayfalar</h4>
+          <a href="games.html">Oyunlar</a>
+          <a href="downloads.html">Oyun İndir</a>
+          <a href="blog.html">Blog</a>
+        <a href="reviews.html">İncelemeler</a>
+        <a href="news.html">Haberler</a>
+        <a href="system-requirements.html">Sistem Gereksinimleri</a>
+      </div>
+      <div class="footer-links">
+        <h4>Kategoriler</h4>
+        <a href="games.html?category=action">Action</a>
+        <a href="games.html?category=rpg">RPG</a>
+        <a href="games.html?category=horror">Horror</a>
+        <a href="games.html?category=racing">Racing</a>
+        <a href="games.html?category=multiplayer">Multiplayer</a>
+      </div>
+      <div class="footer-links">
+        <h4>İletişim</h4>
+        <a href="mailto:info@wado.com"><i class="fas fa-envelope"></i> info@wado.com</a>
+        <a href="#"><i class="fas fa-comment"></i> Canlı Destek</a>
+        <a href="#"><i class="fas fa-file-contract"></i> Gizlilik Politikası</a>
+        <a href="#"><i class="fas fa-cookie"></i> Çerez Politikası</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Wado. Tüm hakları saklıdır. Bu site tamamen yasal oyun içerikleri sunmaktadır.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

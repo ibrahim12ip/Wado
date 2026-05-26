@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oyun İndir - Wado</title>
+  <meta name="description" content="Wado - En popüler oyunları doğrudan indir. Hızlı ve güvenli oyun indirme.">
+  <meta name="keywords" content="oyun indir, oyun download, steam, epic games, ücretsiz oyunlar, oyun kurulum">
+  <link rel="canonical" href="https://wado.vercel.app/downloads">
+  <meta property="og:title" content="Oyun İndir - Wado">
+  <meta property="og:description" content="En popüler oyunlar için indirme bağlantıları">
+  <script type="application/ld+json">
+  { "@context": "https://schema.org", "@type": "CollectionPage", "name": "Oyun İndir", "url": "https://wado.vercel.app/downloads" }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="particles-js"></div>
+  <nav class="navbar glass-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><span class="logo-text">W</span><span class="logo-sub">ado</span></a>
+      <div class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <a href="games.html" class="nav-link"><i class="fas fa-gamepad"></i> Oyunlar</a>
+        <a href="downloads.html" class="nav-link active"><i class="fas fa-download"></i> İndir</a>
+        <a href="blog.html" class="nav-link"><i class="fas fa-newspaper"></i> Blog</a>
+        <a href="reviews.html" class="nav-link"><i class="fas fa-star"></i> İncelemeler</a>
+        <a href="news.html" class="nav-link"><i class="fas fa-bolt"></i> Haberler</a>
+        <a href="system-requirements.html" class="nav-link"><i class="fas fa-microchip"></i> Sistem Gereksinimleri</a>
+      </div>
+      <div class="nav-actions">
+        <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
+        <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <a href="profile.html" class="auth-btn"><i class="fas fa-user"></i> <span>Giriş Yap</span></a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+    <div class="search-bar" id="searchBar">
+      <input type="text" id="searchInput" placeholder="İndirilecek oyun ara...">
+      <button id="searchSubmit"><i class="fas fa-arrow-right"></i></button>
+    </div>
+  </nav>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-content">
+        <h1><i class="fas fa-download"></i> Oyun İndir</h1>
+        <p>Oyunları doğrudan Wado sunucularından indir. Güvenli ve hızlı.</p>
+        <div style="margin-top:1.5rem;display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;">
+          <span class="hero-badge" style="background:linear-gradient(135deg,#00d4ff,#8b5cf6);color:#fff;font-size:0.85rem;">
+            <i class="fas fa-shield-alt"></i> %100 Güvenli
+          </span>
+          <span class="hero-badge" style="background:linear-gradient(135deg,#00e676,#00c853);color:#000;font-size:0.85rem;">
+            <i class="fas fa-bolt"></i> Hızlı İndirme
+          </span>
+          <span class="hero-badge" style="background:linear-gradient(135deg,#ffd600,#ffab00);color:#000;font-size:0.85rem;">
+            <i class="fas fa-server"></i> Wado CDN
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="filter-bar glass">
+        <div class="filter-group">
+          <select id="downloadCategoryFilter" class="filter-select">
+            <option value="all">Tüm Kategoriler</option>
+            <option value="action">Action</option>
+            <option value="horror">Horror</option>
+            <option value="open-world">Open World</option>
+            <option value="racing">Racing</option>
+            <option value="rpg">RPG</option>
+            <option value="multiplayer">Multiplayer</option>
+            <option value="indie">Indie</option>
+            <option value="survival">Survival</option>
+          </select>
+          <select id="downloadTypeFilter" class="filter-select">
+            <option value="all">Tümü</option>
+            <option value="paid">Ücretli</option>
+            <option value="free">Ücretsiz</option>
+          </select>
+          <select id="downloadSortFilter" class="filter-select">
+            <option value="popular">En Popüler</option>
+            <option value="newest">En Yeni</option>
+            <option value="size">Boyuta Göre</option>
+            <option value="name">İsme Göre</option>
+          </select>
+          <div class="search-inline">
+            <input type="text" id="downloadSearchInput" placeholder="İndirilecek oyun ara...">
+            <i class="fas fa-search"></i>
+          </div>
+        </div>
+      </div>
+      <div class="downloads-grid" id="downloadsContainer"></div>
+      <div class="load-more">
+        <button class="btn-primary" id="loadMoreDownloads">Daha Fazla Göster <i class="fas fa-chevron-down"></i></button>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="sys-req-banner glass" style="background:linear-gradient(135deg,rgba(0,230,118,0.05),rgba(0,212,255,0.05));">
+        <div class="sys-req-content">
+          <h2><i class="fas fa-shield-alt"></i> Güvenli İndirme</h2>
+          <p>Wado üzerinden tüm oyun dosyaları doğrudan kendi sunucularımızdan sunulmaktadır.<br>
+          Her dosya virüs taramasından geçirilir ve %100 güvenlidir.<br>
+          Yüksek hızlı CDN altyapımız sayesinde en hızlı şekilde indirebilirsiniz.</p>
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem;">
+            <span style="display:flex;align-items:center;gap:6px;padding:0.5rem 1rem;background:rgba(0,212,255,0.1);border-radius:8px;font-size:0.9rem;">
+              <i class="fas fa-shield-alt" style="color:#00d4ff;"></i> Virüssüz
+            </span>
+            <span style="display:flex;align-items:center;gap:6px;padding:0.5rem 1rem;background:rgba(0,212,255,0.1);border-radius:8px;font-size:0.9rem;">
+              <i class="fas fa-bolt" style="color:#00d4ff;"></i> Yüksek Hız
+            </span>
+            <span style="display:flex;align-items:center;gap:6px;padding:0.5rem 1rem;background:rgba(0,212,255,0.1);border-radius:8px;font-size:0.9rem;">
+              <i class="fas fa-server" style="color:#00d4ff;"></i> Wado Sunucu
+            </span>
+          </div>
+        </div>
+        <div class="sys-req-visual">
+          <i class="fas fa-shield-alt" style="font-size:6rem;"></i>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer glass-nav">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo"><span class="logo-text">W</span><span class="logo-sub">ado</span></div>
+        <p>Oyun dünyasının kalbi burada atıyor. Güvenli ve hızlı indirme.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-discord"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-steam"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Sayfalar</h4>
+        <a href="games.html">Oyunlar</a>
+        <a href="downloads.html">Oyun İndir</a>
+        <a href="blog.html">Blog</a>
+        <a href="reviews.html">İncelemeler</a>
+        <a href="news.html">Haberler</a>
+        <a href="system-requirements.html">Sistem Gereksinimleri</a>
+      </div>
+      <div class="footer-links">
+        <h4>Kategoriler</h4>
+        <a href="downloads.html?category=action">Action</a>
+        <a href="downloads.html?category=rpg">RPG</a>
+        <a href="downloads.html?category=horror">Horror</a>
+        <a href="downloads.html?category=racing">Racing</a>
+        <a href="downloads.html?category=multiplayer">Multiplayer</a>
+      </div>
+      <div class="footer-links">
+        <h4>İletişim</h4>
+        <a href="mailto:info@wado.com"><i class="fas fa-envelope"></i> info@wado.com</a>
+        <a href="#"><i class="fas fa-comment"></i> Canlı Destek</a>
+        <a href="#"><i class="fas fa-file-contract"></i> Gizlilik Politikası</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Wado. Tüm hakları saklıdır. Tüm oyun dosyaları Wado sunucularından sunulmaktadır.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/downloads.js"></script>
+</body>
+</html>

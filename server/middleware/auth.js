@@ -1,0 +1,31 @@
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
+
+const auth = async (req, res, next) => {
+  try {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    if (!token) return res.status(401).json({ message: 'Yetkilendirme gerekli' });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) return res.status(401).json({ message: 'Kullanıcı bulunamadı' });
+    if (user.isBanned) return res.status(403).json({ message: 'Hesabınız banlanmış' });
+
+    req.user = user;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: 'Geçersiz token' });
+  }
+};
+
+const adminAuth = async (req, res, next) => {
+  await auth(req, res, () => {
+    if (req.user && (req.user.role === 'admin' || req.user.role === 'mod')) {
+      next();
+    } else {
+      res.status(403).json({ message: 'Admin yetkisi gerekli' });
+    }
+  });
+};
+
+module.exports = { auth, adminAuth };

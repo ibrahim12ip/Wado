@@ -1,0 +1,12 @@
+{
+  "name": "wado",
+  "version": "1.0.0",
+  "description": "Wado - Modern Gaming Blog Platform",
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../admin && npm install",
+    "dev:frontend": "npx live-server frontend",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:admin": "cd admin && npm start",
+    "build": "cd admin && npm run build"
+  }
+}

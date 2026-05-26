@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil - Wado</title>
+  <meta name="description" content="Wado kullanıcı profili">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="particles-js"></div>
+  <nav class="navbar glass-nav">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo"><span class="logo-text">W</span><span class="logo-sub">ado</span></a>
+      <div class="nav-menu" id="navMenu">
+        <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Ana Sayfa</a>
+        <a href="games.html" class="nav-link"><i class="fas fa-gamepad"></i> Oyunlar</a>
+        <a href="downloads.html" class="nav-link"><i class="fas fa-download"></i> İndir</a>
+        <a href="blog.html" class="nav-link"><i class="fas fa-newspaper"></i> Blog</a>
+        <a href="reviews.html" class="nav-link"><i class="fas fa-star"></i> İncelemeler</a>
+        <a href="news.html" class="nav-link"><i class="fas fa-bolt"></i> Haberler</a>
+        <a href="system-requirements.html" class="nav-link"><i class="fas fa-microchip"></i> Sistem Gereksinimleri</a>
+      </div>
+      <div class="nav-actions">
+        <button class="search-btn" id="searchToggle"><i class="fas fa-search"></i></button>
+        <button class="theme-btn" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <a href="profile.html" class="auth-btn active"><i class="fas fa-user"></i> <span>Profil</span></a>
+        <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero-content">
+        <h1><i class="fas fa-user"></i> Profil</h1>
+        <p>Hesabını yönet, favorilerini görüntüle</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="profile-container glass">
+        <div class="profile-tabs">
+          <button class="profile-tab active" data-tab="login"><i class="fas fa-sign-in-alt"></i> Giriş Yap</button>
+          <button class="profile-tab" data-tab="register"><i class="fas fa-user-plus"></i> Kayıt Ol</button>
+        </div>
+        <div class="profile-content">
+          <div class="tab-content active" id="tab-login">
+            <form id="loginForm" class="auth-form">
+              <h3><i class="fas fa-sign-in-alt"></i> Giriş Yap</h3>
+              <div class="form-group">
+                <label><i class="fas fa-envelope"></i> E-posta</label>
+                <input type="email" placeholder="ornek@email.com" required>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-lock"></i> Şifre</label>
+                <input type="password" placeholder="********" required>
+              </div>
+              <button type="submit" class="btn-primary w-full">Giriş Yap</button>
+              <p class="form-footer">Hesabın yok mu? <a href="#" id="switchToRegister">Kayıt Ol</a></p>
+            </form>
+          </div>
+          <div class="tab-content" id="tab-register">
+            <form id="registerForm" class="auth-form">
+              <h3><i class="fas fa-user-plus"></i> Kayıt Ol</h3>
+              <div class="form-group">
+                <label><i class="fas fa-user"></i> Kullanıcı Adı</label>
+                <input type="text" placeholder="kullaniciadi" required>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-envelope"></i> E-posta</label>
+                <input type="email" placeholder="ornek@email.com" required>
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-lock"></i> Şifre</label>
+                <input type="password" placeholder="********" required>
+              </div>
+              <button type="submit" class="btn-primary w-full">Kayıt Ol</button>
+              <p class="form-footer">Zaten hesabın var mı? <a href="#" id="switchToLogin">Giriş Yap</a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer glass-nav">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="footer-logo"><span class="logo-text">W</span><span class="logo-sub">ado</span></div>
+        <p>Oyun dünyasının kalbi burada atıyor.</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-discord"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-steam"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Sayfalar</h4>
+        <a href="games.html">Oyunlar</a>
+        <a href="blog.html">Blog</a>
+        <a href="reviews.html">İncelemeler</a>
+        <a href="news.html">Haberler</a>
+        <a href="system-requirements.html">Sistem Gereksinimleri</a>
+      </div>
+      <div class="footer-links">
+        <h4>Kategoriler</h4>
+        <a href="games.html?category=action">Action</a>
+        <a href="games.html?category=rpg">RPG</a>
+        <a href="games.html?category=horror">Horror</a>
+        <a href="games.html?category=racing">Racing</a>
+        <a href="games.html?category=multiplayer">Multiplayer</a>
+      </div>
+      <div class="footer-links">
+        <h4>İletişim</h4>
+        <a href="mailto:info@wado.com"><i class="fas fa-envelope"></i> info@wado.com</a>
+        <a href="#"><i class="fas fa-comment"></i> Canlı Destek</a>
+        <a href="#"><i class="fas fa-file-contract"></i> Gizlilik Politikası</a>
+      </div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 Wado. Tüm hakları saklıdır.</p></div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/animations.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
