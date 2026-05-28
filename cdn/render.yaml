@@ -1,12 +1,10 @@
-# Wado CDN - Render Deployment
-
 services:
   - type: web
     name: wado-cdn
-    env: php
-    buildCommand: composer install
-    startCommand: php -S 0.0.0.0:10000
-    envVars:
-      - key: APP_ENV
-        value: production
+    env: docker
+    dockerfilePath: ./Dockerfile
     healthCheckPath: /
+    disk:
+      name: data
+      mountPath: /var/www/html/files
+      sizeGB: 10
