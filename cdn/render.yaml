@@ -8,3 +8,6 @@ services:
       name: wado-files
       mountPath: /app/files
       sizeGB: 1
+    envVars:
+      - key: PORT
+        value: 8080
