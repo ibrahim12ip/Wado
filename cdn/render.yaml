@@ -5,6 +5,6 @@ services:
     dockerfilePath: ./Dockerfile
     healthCheckPath: /
     disk:
-      name: data
-      mountPath: /var/www/html/files
-      sizeGB: 10
+      name: wado-files
+      mountPath: /app/files
+      sizeGB: 1

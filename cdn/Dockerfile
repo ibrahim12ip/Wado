@@ -1,13 +1,12 @@
-FROM php:8.2-apache
+FROM php:8.2-cli
 
-RUN docker-php-ext-install -j$(nproc) pdo_mysql && \
-    a2enmod rewrite
+WORKDIR /app
 
-COPY . /var/www/html
+COPY . /app
 
-RUN chmod -R 755 /var/www/html/files /var/www/html/data && \
-    chown -R www-data:www-data /var/www/html/files /var/www/html/data
+RUN mkdir -p /app/files /app/data && \
+    chmod -R 755 /app/files /app/data
 
-EXPOSE 80
+EXPOSE 8080
 
-CMD ["apache2-foreground"]
+CMD ["sh", "-c", "php -S 0.0.0.0:${PORT:-8080} -t /app"]
