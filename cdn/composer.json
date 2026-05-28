@@ -1,7 +1,0 @@
-{
-    "name": "ibrahim/wado-cdn",
-    "description": "Wado CDN - File hosting",
-    "require": {
-        "php": ">=8.0"
-    }
-}

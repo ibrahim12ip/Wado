@@ -3,7 +3,7 @@
 define('ADMIN_USER', 'ibrahim');
 define('ADMIN_PASS', 'ibrahim123');
 define('SITE_NAME', 'Wado CDN');
-define('SITE_URL', 'https://wado-cdn.onrender.com');
+define('SITE_URL', 'https://' . $_SERVER['HTTP_HOST']);
 define('FILES_DIR', __DIR__ . '/files');
 define('DATA_DIR', __DIR__ . '/data');
 define('MAX_FILE_SIZE', 500 * 1024 * 1024); // 500MB
