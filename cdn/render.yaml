@@ -1,0 +1,12 @@
+# Wado CDN - Render Deployment
+
+services:
+  - type: web
+    name: wado-cdn
+    env: php
+    buildCommand: composer install
+    startCommand: php -S 0.0.0.0:10000
+    envVars:
+      - key: APP_ENV
+        value: production
+    healthCheckPath: /
