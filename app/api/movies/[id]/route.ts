@@ -37,7 +37,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       data: {
         title: body.title, description: body.description, posterUrl: body.posterUrl,
         backdropUrl: body.backdropUrl, trailerUrl: body.trailerUrl, videoUrl: body.videoUrl,
-        hlsUrl: body.hlsUrl, duration: body.duration ? parseInt(body.duration) : null,
+        duration: body.duration ? parseInt(body.duration) : null,
         year: body.year ? parseInt(body.year) : null,
         imdbRating: body.imdbRating ? parseFloat(body.imdbRating) : null,
         contentRating: body.contentRating, featured: body.featured, isActive: body.isActive,

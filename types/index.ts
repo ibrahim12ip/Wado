@@ -28,7 +28,6 @@ export interface Series {
   backdropUrl: string | null;
   trailerUrl: string | null;
   videoUrl: string | null;
-  hlsUrl: string | null;
   year: number | null;
   imdbRating: number | null;
   contentRating: string | null;
@@ -51,7 +50,6 @@ export interface Episode {
   duration: number | null;
   thumbnailUrl: string | null;
   videoUrl: string | null;
-  hlsUrl: string | null;
   isActive: boolean;
   seriesId: string;
   series?: Series;
@@ -67,7 +65,6 @@ export interface Movie {
   backdropUrl: string | null;
   trailerUrl: string | null;
   videoUrl: string | null;
-  hlsUrl: string | null;
   duration: number | null;
   year: number | null;
   imdbRating: number | null;
@@ -98,7 +95,6 @@ export interface Program {
   posterUrl: string | null;
   backdropUrl: string | null;
   videoUrl: string | null;
-  hlsUrl: string | null;
   duration: number | null;
   isActive: boolean;
   live: boolean;
@@ -166,7 +162,6 @@ export interface LiveStream {
   title: string;
   description: string | null;
   streamUrl: string | null;
-  hlsUrl: string | null;
   thumbnailUrl: string | null;
   isLive: boolean;
   scheduledAt: string | null;

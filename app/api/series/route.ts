@@ -61,7 +61,6 @@ export async function POST(request: NextRequest) {
         backdropUrl: body.backdropUrl,
         trailerUrl: body.trailerUrl,
         videoUrl: body.videoUrl,
-        hlsUrl: body.hlsUrl,
         year: body.year ? parseInt(body.year) : null,
         imdbRating: body.imdbRating ? parseFloat(body.imdbRating) : null,
         contentRating: body.contentRating,

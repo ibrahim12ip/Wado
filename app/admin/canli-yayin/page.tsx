@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Plus, Trash2, Pencil, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FileUpload } from "@/components/ui/file-upload";
 import toast from "react-hot-toast";
 
 export default function AdminLivePage() {
@@ -12,7 +13,7 @@ export default function AdminLivePage() {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({ title: "", description: "", streamUrl: "", hlsUrl: "", thumbnailUrl: "", scheduledAt: "", isLive: false });
+  const [form, setForm] = useState({ title: "", description: "", streamUrl: "", thumbnailUrl: "", scheduledAt: "", isLive: false });
 
   const fetchStreams = useCallback(async () => {
     const res = await fetch("/api/live");
@@ -33,7 +34,7 @@ export default function AdminLivePage() {
       const d = await res.json();
       if (d.success) {
         toast.success(editing ? "Güncellendi" : "Eklendi");
-        setForm({ title: "", description: "", streamUrl: "", hlsUrl: "", thumbnailUrl: "", scheduledAt: "", isLive: false });
+        setForm({ title: "", description: "", streamUrl: "", thumbnailUrl: "", scheduledAt: "", isLive: false });
         setShowForm(false); setEditing(null);
         fetchStreams();
       } else toast.error(d.error);
@@ -51,7 +52,7 @@ export default function AdminLivePage() {
 
   const startEdit = (s: any) => {
     setEditing(s);
-    setForm({ title: s.title, description: s.description || "", streamUrl: s.streamUrl || "", hlsUrl: s.hlsUrl || "", thumbnailUrl: s.thumbnailUrl || "", scheduledAt: s.scheduledAt ? s.scheduledAt.slice(0, 16) : "", isLive: s.isLive });
+    setForm({ title: s.title, description: s.description || "", streamUrl: s.streamUrl || "", thumbnailUrl: s.thumbnailUrl || "", scheduledAt: s.scheduledAt ? s.scheduledAt.slice(0, 16) : "", isLive: s.isLive });
     setShowForm(true);
   };
 
@@ -59,7 +60,7 @@ export default function AdminLivePage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">Canlı Yayın</h1>
-        <Button onClick={() => { setEditing(null); setForm({ title: "", description: "", streamUrl: "", hlsUrl: "", thumbnailUrl: "", scheduledAt: "", isLive: false }); setShowForm(!showForm); }}>
+        <Button onClick={() => { setEditing(null); setForm({ title: "", description: "", streamUrl: "", thumbnailUrl: "", scheduledAt: "", isLive: false }); setShowForm(!showForm); }}>
           <Plus className="h-4 w-4 mr-1" />{showForm ? "Listeye Dön" : "Yayın Ekle"}
         </Button>
       </div>
@@ -70,8 +71,7 @@ export default function AdminLivePage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2"><label className="text-sm text-white">Başlık *</label><Input value={form.title} onChange={(e) => setForm(f => ({ ...f, title: e.target.value }))} required /></div>
-              <div className="space-y-2"><label className="text-sm text-white">Stream URL</label><Input value={form.streamUrl} onChange={(e) => setForm(f => ({ ...f, streamUrl: e.target.value }))} /></div>
-              <div className="space-y-2"><label className="text-sm text-white">HLS URL</label><Input value={form.hlsUrl} onChange={(e) => setForm(f => ({ ...f, hlsUrl: e.target.value }))} /></div>
+              <div className="space-y-2"><label className="text-sm text-white">Stream URL</label><Input value={form.streamUrl} onChange={(e) => setForm(f => ({ ...f, streamUrl: e.target.value }))} placeholder="https://..." /></div>
               <div className="space-y-2"><label className="text-sm text-white">Thumbnail URL</label><Input value={form.thumbnailUrl} onChange={(e) => setForm(f => ({ ...f, thumbnailUrl: e.target.value }))} /></div>
               <div className="space-y-2"><label className="text-sm text-white">Planlanan Tarih</label><Input value={form.scheduledAt} onChange={(e) => setForm(f => ({ ...f, scheduledAt: e.target.value }))} type="datetime-local" /></div>
               <div className="space-y-2 flex items-center gap-2 pt-6">

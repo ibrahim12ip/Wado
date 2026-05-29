@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FileUpload } from "@/components/ui/file-upload";
 import toast from "react-hot-toast";
 
 interface ContentFormProps {
@@ -26,7 +27,6 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
     backdropUrl: initialData?.backdropUrl || "",
     trailerUrl: initialData?.trailerUrl || "",
     videoUrl: initialData?.videoUrl || "",
-    hlsUrl: initialData?.hlsUrl || "",
     duration: initialData?.duration?.toString() || "",
     year: initialData?.year?.toString() || "",
     imdbRating: initialData?.imdbRating?.toString() || "",
@@ -132,16 +132,7 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
             <Input value={form.trailerUrl} onChange={(e) => updateField("trailerUrl", e.target.value)} placeholder="https://..." />
           </div>
           {type !== "program" && (
-            <div className="space-y-2">
-              <label className="text-sm text-white">Video URL (MP4) *</label>
-              <Input value={form.videoUrl} onChange={(e) => updateField("videoUrl", e.target.value)} placeholder="https://..." />
-            </div>
-          )}
-          {type !== "program" && (
-            <div className="space-y-2">
-              <label className="text-sm text-white">HLS URL (opsiyonel)</label>
-              <Input value={form.hlsUrl} onChange={(e) => updateField("hlsUrl", e.target.value)} placeholder="https://..." />
-            </div>
+            <FileUpload value={form.videoUrl} onChange={(v) => updateField("videoUrl", v)} label="Video (MP4)" />
           )}
         </div>
       </div>

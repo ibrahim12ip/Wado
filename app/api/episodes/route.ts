@@ -37,7 +37,6 @@ export async function POST(request: NextRequest) {
         duration: body.duration ? parseInt(body.duration) : null,
         thumbnailUrl: body.thumbnailUrl,
         videoUrl: body.videoUrl,
-        hlsUrl: body.hlsUrl,
         seriesId: body.seriesId,
       },
       include: { series: true },

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Plus, Trash2, Pencil, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FileUpload } from "@/components/ui/file-upload";
 import toast from "react-hot-toast";
 
 export default function AdminProgramsPage() {
@@ -13,7 +14,7 @@ export default function AdminProgramsPage() {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({ title: "", description: "", posterUrl: "", backdropUrl: "", videoUrl: "", hlsUrl: "", duration: "", live: false, liveUrl: "", schedule: "", categoryId: "" });
+  const [form, setForm] = useState({ title: "", description: "", posterUrl: "", backdropUrl: "", videoUrl: "", duration: "", live: false, liveUrl: "", schedule: "", categoryId: "" });
 
   const fetchAll = useCallback(async () => {
     const [p, c] = await Promise.all([fetch("/api/programs").then(r => r.json()), fetch("/api/categories").then(r => r.json())]);
@@ -34,7 +35,7 @@ export default function AdminProgramsPage() {
       const d = await res.json();
       if (d.success) {
         toast.success(editing ? "Güncellendi" : "Eklendi");
-        setForm({ title: "", description: "", posterUrl: "", backdropUrl: "", videoUrl: "", hlsUrl: "", duration: "", live: false, liveUrl: "", schedule: "", categoryId: "" });
+        setForm({ title: "", description: "", posterUrl: "", backdropUrl: "", videoUrl: "", duration: "", live: false, liveUrl: "", schedule: "", categoryId: "" });
         setShowForm(false); setEditing(null);
         fetchAll();
       } else toast.error(d.error);
@@ -52,7 +53,7 @@ export default function AdminProgramsPage() {
 
   const startEdit = (p: any) => {
     setEditing(p);
-    setForm({ title: p.title, description: p.description || "", posterUrl: p.posterUrl || "", backdropUrl: p.backdropUrl || "", videoUrl: p.videoUrl || "", hlsUrl: p.hlsUrl || "", duration: p.duration?.toString() || "", live: p.live || false, liveUrl: p.liveUrl || "", schedule: p.schedule || "", categoryId: p.categoryId || "" });
+    setForm({ title: p.title, description: p.description || "", posterUrl: p.posterUrl || "", backdropUrl: p.backdropUrl || "", videoUrl: p.videoUrl || "", duration: p.duration?.toString() || "", live: p.live || false, liveUrl: p.liveUrl || "", schedule: p.schedule || "", categoryId: p.categoryId || "" });
     setShowForm(true);
   };
 
@@ -60,7 +61,7 @@ export default function AdminProgramsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">Program Yönetimi</h1>
-        <Button onClick={() => { setEditing(null); setForm({ title: "", description: "", posterUrl: "", backdropUrl: "", videoUrl: "", hlsUrl: "", duration: "", live: false, liveUrl: "", schedule: "", categoryId: "" }); setShowForm(!showForm); }}>
+        <Button onClick={() => { setEditing(null); setForm({ title: "", description: "", posterUrl: "", backdropUrl: "", videoUrl: "", duration: "", live: false, liveUrl: "", schedule: "", categoryId: "" }); setShowForm(!showForm); }}>
           <Plus className="h-4 w-4 mr-1" />{showForm ? "Listeye Dön" : "Program Ekle"}
         </Button>
       </div>
@@ -79,8 +80,7 @@ export default function AdminProgramsPage() {
               </div>
               <div className="space-y-2"><label className="text-sm text-white">Poster URL</label><Input value={form.posterUrl} onChange={(e) => setForm(f => ({ ...f, posterUrl: e.target.value }))} /></div>
               <div className="space-y-2"><label className="text-sm text-white">Backdrop URL</label><Input value={form.backdropUrl} onChange={(e) => setForm(f => ({ ...f, backdropUrl: e.target.value }))} /></div>
-              <div className="space-y-2"><label className="text-sm text-white">Video URL</label><Input value={form.videoUrl} onChange={(e) => setForm(f => ({ ...f, videoUrl: e.target.value }))} /></div>
-              <div className="space-y-2"><label className="text-sm text-white">HLS URL</label><Input value={form.hlsUrl} onChange={(e) => setForm(f => ({ ...f, hlsUrl: e.target.value }))} /></div>
+              <div className="space-y-2 md:col-span-2"><FileUpload value={form.videoUrl} onChange={(v) => setForm(f => ({ ...f, videoUrl: v }))} label="Video (MP4)" /></div>
               <div className="space-y-2"><label className="text-sm text-white">Süre (dk)</label><Input value={form.duration} onChange={(e) => setForm(f => ({ ...f, duration: e.target.value }))} type="number" /></div>
               <div className="space-y-2"><label className="text-sm text-white">Canlı Yayın URL</label><Input value={form.liveUrl} onChange={(e) => setForm(f => ({ ...f, liveUrl: e.target.value }))} /></div>
               <div className="space-y-2"><label className="text-sm text-white">Yayın Takvimi</label><Input value={form.schedule} onChange={(e) => setForm(f => ({ ...f, schedule: e.target.value }))} /></div>

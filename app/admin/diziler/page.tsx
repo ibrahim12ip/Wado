@@ -106,7 +106,7 @@ export default function AdminSeriesPage() {
                   </td>
                   <td className="p-4 text-muted-foreground hidden md:table-cell">{s._count?.episodes || 0}</td>
                   <td className="p-4 hidden lg:table-cell">
-                    {s.videoUrl || s.hlsUrl ? (
+                    {s.videoUrl ? (
                       <span className="flex items-center gap-1 text-xs text-green-400"><MonitorPlay className="h-3 w-3" /> Var</span>
                     ) : (
                       <span className="flex items-center gap-1 text-xs text-white/30"><MonitorOff className="h-3 w-3" /> Yok</span>

@@ -12,7 +12,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       where: { id },
       data: {
         title: body.title, description: body.description,
-        streamUrl: body.streamUrl, hlsUrl: body.hlsUrl,
+        streamUrl: body.streamUrl,
         thumbnailUrl: body.thumbnailUrl,
         isLive: body.isLive ?? false,
         scheduledAt: body.scheduledAt ? new Date(body.scheduledAt) : null,

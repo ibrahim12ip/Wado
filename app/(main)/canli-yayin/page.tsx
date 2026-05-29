@@ -56,7 +56,7 @@ export default function LivePage() {
                     </div>
                   </div>
                   <div className="p-4 flex items-center gap-3">
-                    <a href={stream.hlsUrl || stream.streamUrl || "#"} target="_blank">
+                    <a href={stream.streamUrl || "#"} target="_blank">
                       <Button className="bg-wado-600 hover:bg-wado-700"><Radio className="h-4 w-4 mr-2" />İzlemeye Başla</Button>
                     </a>
                   </div>

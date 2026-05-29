@@ -24,7 +24,6 @@ export async function POST(request: Request) {
         title: body.title,
         description: body.description,
         streamUrl: body.streamUrl,
-        hlsUrl: body.hlsUrl,
         thumbnailUrl: body.thumbnailUrl,
         isLive: body.isLive || false,
         scheduledAt: body.scheduledAt ? new Date(body.scheduledAt) : null,

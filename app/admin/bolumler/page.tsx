@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Plus, Trash2, Pencil, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FileUpload } from "@/components/ui/file-upload";
 import toast from "react-hot-toast";
 
 export default function AdminEpisodesPage() {
@@ -14,7 +15,7 @@ export default function AdminEpisodesPage() {
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({ title: "", description: "", episodeNumber: "", seasonNumber: "1", duration: "", thumbnailUrl: "", videoUrl: "", hlsUrl: "", seriesId: "" });
+  const [form, setForm] = useState({ title: "", description: "", episodeNumber: "", seasonNumber: "1", duration: "", thumbnailUrl: "", videoUrl: "", seriesId: "" });
 
   const fetchAll = useCallback(async () => {
     const [s, e] = await Promise.all([fetch("/api/series").then(r => r.json()), fetch("/api/episodes").then(r => r.json())]);
@@ -35,7 +36,7 @@ export default function AdminEpisodesPage() {
       const d = await res.json();
       if (d.success) {
         toast.success(editing ? "Güncellendi" : "Eklendi");
-        setForm({ title: "", description: "", episodeNumber: "", seasonNumber: "1", duration: "", thumbnailUrl: "", videoUrl: "", hlsUrl: "", seriesId: "" });
+        setForm({ title: "", description: "", episodeNumber: "", seasonNumber: "1", duration: "", thumbnailUrl: "", videoUrl: "", seriesId: "" });
         setShowForm(false);
         setEditing(null);
         fetchAll();
@@ -58,7 +59,7 @@ export default function AdminEpisodesPage() {
       title: ep.title, description: ep.description || "",
       episodeNumber: ep.episodeNumber.toString(), seasonNumber: ep.seasonNumber.toString(),
       duration: ep.duration?.toString() || "", thumbnailUrl: ep.thumbnailUrl || "",
-      videoUrl: ep.videoUrl || "", hlsUrl: ep.hlsUrl || "", seriesId: ep.seriesId,
+      videoUrl: ep.videoUrl || "", seriesId: ep.seriesId,
     });
     setShowForm(true);
   };
@@ -70,7 +71,7 @@ export default function AdminEpisodesPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">Bölüm Yönetimi</h1>
-        <Button onClick={() => { setEditing(null); setForm({ title: "", description: "", episodeNumber: "", seasonNumber: "1", duration: "", thumbnailUrl: "", videoUrl: "", hlsUrl: "", seriesId: "" }); setShowForm(!showForm); }}>
+        <Button onClick={() => { setEditing(null); setForm({ title: "", description: "", episodeNumber: "", seasonNumber: "1", duration: "", thumbnailUrl: "", videoUrl: "", seriesId: "" }); setShowForm(!showForm); }}>
           <Plus className="h-4 w-4 mr-1" />{showForm ? "Listeye Dön" : "Bölüm Ekle"}
         </Button>
       </div>
@@ -90,8 +91,7 @@ export default function AdminEpisodesPage() {
               <div className="space-y-2"><label className="text-sm text-white">Bölüm No *</label><Input value={form.episodeNumber} onChange={(e) => setForm(f => ({ ...f, episodeNumber: e.target.value }))} type="number" required /></div>
               <div className="space-y-2"><label className="text-sm text-white">Sezon No</label><Input value={form.seasonNumber} onChange={(e) => setForm(f => ({ ...f, seasonNumber: e.target.value }))} type="number" /></div>
               <div className="space-y-2"><label className="text-sm text-white">Süre (dk)</label><Input value={form.duration} onChange={(e) => setForm(f => ({ ...f, duration: e.target.value }))} type="number" /></div>
-              <div className="space-y-2"><label className="text-sm text-white">Video URL (MP4) *</label><Input value={form.videoUrl} onChange={(e) => setForm(f => ({ ...f, videoUrl: e.target.value }))} placeholder="https://..." /></div>
-              <div className="space-y-2"><label className="text-sm text-white">HLS URL (opsiyonel)</label><Input value={form.hlsUrl} onChange={(e) => setForm(f => ({ ...f, hlsUrl: e.target.value }))} placeholder="https://..." /></div>
+              <div className="space-y-2 md:col-span-2"><FileUpload value={form.videoUrl} onChange={(v) => setForm(f => ({ ...f, videoUrl: v }))} label="Video (MP4)" /></div>
               <div className="space-y-2"><label className="text-sm text-white">Thumbnail URL</label><Input value={form.thumbnailUrl} onChange={(e) => setForm(f => ({ ...f, thumbnailUrl: e.target.value }))} /></div>
             </div>
             <div className="space-y-2"><label className="text-sm text-white">Açıklama</label>

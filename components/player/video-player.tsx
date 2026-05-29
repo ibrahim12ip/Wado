@@ -7,7 +7,6 @@ import {
   SkipForward, SkipBack, FastForward, Rewind,
 } from "lucide-react";
 import { cn, formatDuration } from "@/lib/utils";
-import Hls from "hls.js";
 
 interface VideoPlayerProps {
   src: string;
@@ -24,7 +23,6 @@ export function VideoPlayer({
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const hlsRef = useRef<Hls | null>(null);
   const controlsTimeout = useRef<NodeJS.Timeout>();
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -33,14 +31,11 @@ export function VideoPlayer({
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [currentQuality, setCurrentQuality] = useState("Auto");
   const [bufferProgress, setBufferProgress] = useState(0);
   const [loading, setLoading] = useState(true);
   const [skipIndicator, setSkipIndicator] = useState<{ dir: "forward" | "backward"; sec: number } | null>(null);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
-  const [showQualityMenu, setShowQualityMenu] = useState(false);
-  const isHls = src?.endsWith(".m3u8");
 
   useEffect(() => {
     const video = videoRef.current;
@@ -48,34 +43,8 @@ export function VideoPlayer({
     setLoading(true);
     setIsPlaying(false);
     setCurrentTime(0);
-
-    if (hlsRef.current) { hlsRef.current.destroy(); hlsRef.current = null; }
-
-    if (isHls && Hls.isSupported()) {
-      const hls = new Hls({
-        enableWorker: true, lowLatencyMode: true,
-        backBufferLength: 30, maxBufferLength: 30, maxMaxBufferLength: 60,
-      });
-      hlsRef.current = hls;
-      hls.loadSource(src);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => { setLoading(false); video.play().catch(() => {}); });
-      hls.on(Hls.Events.LEVEL_SWITCHED, (_e, data) => {
-        const levels = hls.levels;
-        if (levels?.[data.level]) setCurrentQuality(levels[data.level].height + "p");
-      });
-      hls.on(Hls.Events.ERROR, (_event, data) => {
-        if (data.fatal) {
-          if (data.type === Hls.ErrorTypes.NETWORK_ERROR) hls.startLoad();
-          else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
-        }
-      });
-    } else {
-      video.src = src;
-    }
-
-    return () => { if (hlsRef.current) { hlsRef.current.destroy(); hlsRef.current = null; } };
-  }, [src, isHls]);
+    video.src = src;
+  }, [src]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -172,26 +141,17 @@ export function VideoPlayer({
     setShowSpeedMenu(false);
   };
 
-  const changeQuality = (level: number) => {
-    if (hlsRef.current) {
-      hlsRef.current.currentLevel = level;
-      setCurrentQuality(level === -1 ? "Auto" : hlsRef.current.levels[level]?.height + "p");
-    }
-    setShowQualityMenu(false);
-  };
-
   const handleMouseMove = useCallback(() => {
     setShowControls(true);
     if (controlsTimeout.current) clearTimeout(controlsTimeout.current);
     controlsTimeout.current = setTimeout(() => {
-      if (isPlaying) { setShowControls(false); setShowSpeedMenu(false); setShowQualityMenu(false); }
+      if (isPlaying) { setShowControls(false); setShowSpeedMenu(false); }
     }, 3000);
   }, [isPlaying]);
 
   useEffect(() => { return () => { if (controlsTimeout.current) clearTimeout(controlsTimeout.current); }; }, []);
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
-  const hlsLevels = hlsRef.current?.levels || [];
 
   return (
     <div
@@ -335,7 +295,7 @@ export function VideoPlayer({
 
                 <div className="flex items-center gap-2 md:gap-3">
                   <div className="relative">
-                    <button onClick={() => { setShowSpeedMenu(!showSpeedMenu); setShowQualityMenu(false); }} className="text-white/80 hover:text-white transition-colors text-xs md:text-sm font-medium px-2 py-1 rounded bg-white/5 hover:bg-white/10">
+                    <button onClick={() => { setShowSpeedMenu(!showSpeedMenu); }} className="text-white/80 hover:text-white transition-colors text-xs md:text-sm font-medium px-2 py-1 rounded bg-white/5 hover:bg-white/10">
                       {playbackRate}x
                     </button>
                     <AnimatePresence>
@@ -347,28 +307,6 @@ export function VideoPlayer({
                             <button key={rate} onClick={() => changeSpeed(rate)}
                               className={cn("w-full px-3 py-1.5 text-xs text-left rounded-md transition-colors", playbackRate === rate ? "bg-wado-600 text-white" : "text-white/80 hover:bg-white/10")}
                             >{rate}x</button>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-
-                  <div className="relative">
-                    <button onClick={() => { setShowQualityMenu(!showQualityMenu); setShowSpeedMenu(false); }} className="text-white/80 hover:text-white transition-colors text-xs md:text-sm font-medium px-2 py-1 rounded bg-white/5 hover:bg-white/10">
-                      {currentQuality}
-                    </button>
-                    <AnimatePresence>
-                      {showQualityMenu && (
-                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
-                          className="absolute bottom-full right-0 mb-2 w-32 bg-black/95 backdrop-blur-xl rounded-lg border border-white/10 p-1 shadow-2xl"
-                        >
-                          <button onClick={() => changeQuality(-1)}
-                            className={cn("w-full px-3 py-1.5 text-xs text-left rounded-md transition-colors", currentQuality === "Auto" ? "bg-wado-600 text-white" : "text-white/80 hover:bg-white/10")}
-                          >Otomatik</button>
-                          {hlsLevels.map((l, i) => (
-                            <button key={i} onClick={() => changeQuality(i)}
-                              className={cn("w-full px-3 py-1.5 text-xs text-left rounded-md transition-colors", currentQuality === l.height + "p" ? "bg-wado-600 text-white" : "text-white/80 hover:bg-white/10")}
-                            >{l.height}p {l.bitrate ? `(${(l.bitrate / 1000000).toFixed(1)}Mbps)` : ""}</button>
                           ))}
                         </motion.div>
                       )}

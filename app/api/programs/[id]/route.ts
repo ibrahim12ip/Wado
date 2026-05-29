@@ -13,7 +13,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
       data: {
         title: body.title, description: body.description,
         posterUrl: body.posterUrl, backdropUrl: body.backdropUrl,
-        videoUrl: body.videoUrl, hlsUrl: body.hlsUrl,
+        videoUrl: body.videoUrl,
         duration: body.duration ? parseInt(body.duration) : null,
         live: body.live ?? false, liveUrl: body.liveUrl,
         schedule: body.schedule, categoryId: body.categoryId || null,

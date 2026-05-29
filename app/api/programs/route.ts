@@ -34,7 +34,6 @@ export async function POST(request: NextRequest) {
         posterUrl: body.posterUrl,
         backdropUrl: body.backdropUrl,
         videoUrl: body.videoUrl,
-        hlsUrl: body.hlsUrl,
         duration: body.duration ? parseInt(body.duration) : null,
         live: body.live || false,
         liveUrl: body.liveUrl,
