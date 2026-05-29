@@ -53,7 +53,7 @@ export default function WatchPage() {
     fetchContent();
   }, [id, type, episodeId]);
 
-  const videoSrc = episode?.hlsUrl || episode?.videoUrl || (content as Movie)?.hlsUrl || (content as Movie)?.videoUrl || (content as Series)?.hlsUrl || (content as Series)?.videoUrl || "";
+  const videoSrc = episode?.videoUrl || episode?.hlsUrl || (content as Movie)?.videoUrl || (content as Movie)?.hlsUrl || (content as Series)?.videoUrl || (content as Series)?.hlsUrl || "";
   const posterUrl = episode?.thumbnailUrl || content?.backdropUrl || content?.posterUrl || undefined;
 
   const handleNextEpisode = () => {

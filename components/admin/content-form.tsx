@@ -133,13 +133,13 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
           </div>
           {type !== "program" && (
             <div className="space-y-2">
-              <label className="text-sm text-white">Video URL</label>
+              <label className="text-sm text-white">Video URL (MP4) *</label>
               <Input value={form.videoUrl} onChange={(e) => updateField("videoUrl", e.target.value)} placeholder="https://..." />
             </div>
           )}
           {type !== "program" && (
             <div className="space-y-2">
-              <label className="text-sm text-white">HLS URL</label>
+              <label className="text-sm text-white">HLS URL (opsiyonel)</label>
               <Input value={form.hlsUrl} onChange={(e) => updateField("hlsUrl", e.target.value)} placeholder="https://..." />
             </div>
           )}

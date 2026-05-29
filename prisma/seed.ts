@@ -102,7 +102,7 @@ async function main() {
               episodeNumber: e, seasonNumber: s,
               duration: 45 + Math.floor(Math.random() * 20),
               thumbnailUrl: `https://picsum.photos/seed/${data.slug}-s${s}b${e}/640/360`,
-              hlsUrl: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+              videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
               seriesId: series.id,
             },
           });
@@ -135,7 +135,7 @@ async function main() {
           title: data.title, slug: data.slug, description: data.description,
           posterUrl: data.posterUrl, backdropUrl: data.backdropUrl,
           year: data.year, imdbRating: data.imdbRating, duration: data.duration, featured: true,
-          hlsUrl: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+          videoUrl: "https://www.w3schools.com/html/mov_bbb.mp4",
           categoryId: category?.id || null,
         },
       });

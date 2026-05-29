@@ -90,8 +90,8 @@ export default function AdminEpisodesPage() {
               <div className="space-y-2"><label className="text-sm text-white">Bölüm No *</label><Input value={form.episodeNumber} onChange={(e) => setForm(f => ({ ...f, episodeNumber: e.target.value }))} type="number" required /></div>
               <div className="space-y-2"><label className="text-sm text-white">Sezon No</label><Input value={form.seasonNumber} onChange={(e) => setForm(f => ({ ...f, seasonNumber: e.target.value }))} type="number" /></div>
               <div className="space-y-2"><label className="text-sm text-white">Süre (dk)</label><Input value={form.duration} onChange={(e) => setForm(f => ({ ...f, duration: e.target.value }))} type="number" /></div>
-              <div className="space-y-2"><label className="text-sm text-white">Video URL</label><Input value={form.videoUrl} onChange={(e) => setForm(f => ({ ...f, videoUrl: e.target.value }))} /></div>
-              <div className="space-y-2"><label className="text-sm text-white">HLS URL</label><Input value={form.hlsUrl} onChange={(e) => setForm(f => ({ ...f, hlsUrl: e.target.value }))} /></div>
+              <div className="space-y-2"><label className="text-sm text-white">Video URL (MP4) *</label><Input value={form.videoUrl} onChange={(e) => setForm(f => ({ ...f, videoUrl: e.target.value }))} placeholder="https://..." /></div>
+              <div className="space-y-2"><label className="text-sm text-white">HLS URL (opsiyonel)</label><Input value={form.hlsUrl} onChange={(e) => setForm(f => ({ ...f, hlsUrl: e.target.value }))} placeholder="https://..." /></div>
               <div className="space-y-2"><label className="text-sm text-white">Thumbnail URL</label><Input value={form.thumbnailUrl} onChange={(e) => setForm(f => ({ ...f, thumbnailUrl: e.target.value }))} /></div>
             </div>
             <div className="space-y-2"><label className="text-sm text-white">Açıklama</label>

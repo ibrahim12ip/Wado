@@ -33,7 +33,6 @@ export function VideoPlayer({
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [showSettings, setShowSettings] = useState(false);
   const [currentQuality, setCurrentQuality] = useState("Auto");
   const [bufferProgress, setBufferProgress] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -41,7 +40,6 @@ export function VideoPlayer({
   const [playbackRate, setPlaybackRate] = useState(1);
   const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
-  const wasPlayingRef = useRef(false);
   const isHls = src?.endsWith(".m3u8");
 
   useEffect(() => {
@@ -50,21 +48,13 @@ export function VideoPlayer({
     setLoading(true);
     setIsPlaying(false);
     setCurrentTime(0);
-    setDuration(0);
 
-    if (hlsRef.current) {
-      hlsRef.current.destroy();
-      hlsRef.current = null;
-    }
+    if (hlsRef.current) { hlsRef.current.destroy(); hlsRef.current = null; }
 
     if (isHls && Hls.isSupported()) {
       const hls = new Hls({
-        enableWorker: true,
-        lowLatencyMode: true,
-        backBufferLength: 30,
-        maxBufferLength: 30,
-        maxMaxBufferLength: 60,
-        startLevel: -1,
+        enableWorker: true, lowLatencyMode: true,
+        backBufferLength: 30, maxBufferLength: 30, maxMaxBufferLength: 60,
       });
       hlsRef.current = hls;
       hls.loadSource(src);
@@ -80,18 +70,28 @@ export function VideoPlayer({
           else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
         }
       });
-    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-      video.src = src;
-      video.addEventListener("loadedmetadata", () => setLoading(false), { once: true });
     } else {
       video.src = src;
-      video.addEventListener("loadedmetadata", () => setLoading(false), { once: true });
     }
 
-    return () => {
-      if (hlsRef.current) { hlsRef.current.destroy(); hlsRef.current = null; }
-    };
+    return () => { if (hlsRef.current) { hlsRef.current.destroy(); hlsRef.current = null; } };
   }, [src, isHls]);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onMeta = () => setLoading(false);
+    const onWait = () => setLoading(true);
+    const onCanPlay = () => setLoading(false);
+    video.addEventListener("loadedmetadata", onMeta);
+    video.addEventListener("waiting", onWait);
+    video.addEventListener("canplay", onCanPlay);
+    return () => {
+      video.removeEventListener("loadedmetadata", onMeta);
+      video.removeEventListener("waiting", onWait);
+      video.removeEventListener("canplay", onCanPlay);
+    };
+  }, [src]);
 
   const skip = useCallback((seconds: number) => {
     const video = videoRef.current;
@@ -170,7 +170,6 @@ export function VideoPlayer({
     if (videoRef.current) videoRef.current.playbackRate = rate;
     setPlaybackRate(rate);
     setShowSpeedMenu(false);
-    setShowSettings(false);
   };
 
   const changeQuality = (level: number) => {
@@ -179,14 +178,13 @@ export function VideoPlayer({
       setCurrentQuality(level === -1 ? "Auto" : hlsRef.current.levels[level]?.height + "p");
     }
     setShowQualityMenu(false);
-    setShowSettings(false);
   };
 
   const handleMouseMove = useCallback(() => {
     setShowControls(true);
     if (controlsTimeout.current) clearTimeout(controlsTimeout.current);
     controlsTimeout.current = setTimeout(() => {
-      if (isPlaying) { setShowControls(false); setShowSettings(false); setShowSpeedMenu(false); setShowQualityMenu(false); }
+      if (isPlaying) { setShowControls(false); setShowSpeedMenu(false); setShowQualityMenu(false); }
     }, 3000);
   }, [isPlaying]);
 
@@ -194,7 +192,6 @@ export function VideoPlayer({
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
   const hlsLevels = hlsRef.current?.levels || [];
-  const qualityOptions = ["Auto", ...(hlsLevels?.map((l, i) => ({ label: l.height + "p", idx: i })) || [])];
 
   return (
     <div
