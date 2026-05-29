@@ -2,20 +2,23 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Plus, Edit, Trash2, Film, Tv } from "lucide-react";
+import { Plus, Edit, Trash2, Film, Tv, Clapperboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function AdminIceriklerPage() {
   const [seriesCount, setSeriesCount] = useState(0);
   const [movieCount, setMovieCount] = useState(0);
+  const [programCount, setProgramCount] = useState(0);
 
   useEffect(() => {
     Promise.all([
       fetch("/api/series").then(r => r.json()),
       fetch("/api/movies").then(r => r.json()),
-    ]).then(([s, m]) => {
+      fetch("/api/programs").then(r => r.json()),
+    ]).then(([s, m, p]) => {
       if (s.success) setSeriesCount(s.total || s.data?.length || 0);
       if (m.success) setMovieCount(m.total || m.data?.length || 0);
+      if (p.success) setProgramCount(p.total || p.data?.length || 0);
     });
   }, []);
 
@@ -29,7 +32,7 @@ export default function AdminIceriklerPage() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-3 gap-6">
         <Link href="/admin/diziler" className="glass-dark rounded-xl p-6 hover:border-wado-500/30 transition-all group">
           <Tv className="h-10 w-10 text-wado-500 mb-4" />
           <h2 className="text-xl font-semibold text-white group-hover:text-wado-400 transition-colors">Diziler</h2>
@@ -41,6 +44,12 @@ export default function AdminIceriklerPage() {
           <h2 className="text-xl font-semibold text-white group-hover:text-wado-400 transition-colors">Filmler</h2>
           <p className="text-3xl font-bold text-white mt-2">{movieCount}</p>
           <p className="text-sm text-muted-foreground mt-1">film bulunuyor</p>
+        </Link>
+        <Link href="/admin/programlar" className="glass-dark rounded-xl p-6 hover:border-wado-500/30 transition-all group">
+          <Clapperboard className="h-10 w-10 text-wado-500 mb-4" />
+          <h2 className="text-xl font-semibold text-white group-hover:text-wado-400 transition-colors">Programlar</h2>
+          <p className="text-3xl font-bold text-white mt-2">{programCount}</p>
+          <p className="text-sm text-muted-foreground mt-1">program bulunuyor</p>
         </Link>
       </div>
     </div>

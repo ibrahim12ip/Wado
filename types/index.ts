@@ -27,6 +27,8 @@ export interface Series {
   posterUrl: string | null;
   backdropUrl: string | null;
   trailerUrl: string | null;
+  videoUrl: string | null;
+  hlsUrl: string | null;
   year: number | null;
   imdbRating: number | null;
   contentRating: string | null;

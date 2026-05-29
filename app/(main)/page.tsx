@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { HeroSlider } from "@/components/home/hero-slider";
 import { ContentRow } from "@/components/home/content-row";
 import { ContentCard } from "@/components/shared/content-card";
-import { Skeleton } from "@/components/shared/skeleton";
+import Skeleton from "@/components/shared/skeleton";
 import {
   Tv,
   Film,

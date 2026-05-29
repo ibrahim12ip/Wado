@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { ChevronLeft, List, MonitorPlay, Maximize } from "lucide-react";
 import { VideoPlayer } from "@/components/player/video-player";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/shared/skeleton";
+import Skeleton from "@/components/shared/skeleton";
 import type { Series, Episode, Movie } from "@/types";
 
 export default function WatchPage() {
@@ -52,7 +52,7 @@ export default function WatchPage() {
     fetchContent();
   }, [id, type, episodeId]);
 
-  const videoSrc = episode?.hlsUrl || episode?.videoUrl || (content as Movie)?.hlsUrl || (content as Movie)?.videoUrl || "";
+  const videoSrc = episode?.hlsUrl || episode?.videoUrl || (content as Movie)?.hlsUrl || (content as Movie)?.videoUrl || (content as Series)?.hlsUrl || (content as Series)?.videoUrl || "";
   const posterUrl = episode?.thumbnailUrl || content?.backdropUrl || content?.posterUrl || undefined;
 
   const handleNextEpisode = () => {
@@ -78,6 +78,8 @@ export default function WatchPage() {
     return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground">İçerik bulunamadı</p></div>;
   }
 
+  const noVideo = !videoSrc;
+
   const episodes = (type === "seri" || type === "series") ? (content as Series).episodes : [];
 
   return (
@@ -99,14 +101,20 @@ export default function WatchPage() {
       <div className="flex">
         <div className="flex-1">
           <div className="w-full" style={{ height: "100vh", maxHeight: "100vh" }}>
+            {noVideo ? (
+              <div className="h-full flex items-center justify-center text-muted-foreground flex-col gap-2">
+                <p className="text-lg">Bu içerik için video bulunamadı</p>
+                <p className="text-sm">Admin panelden dizi/film URL'si ekleyin</p>
+              </div>
+            ) : (
             <VideoPlayer
-              src={videoSrc || "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"}
+              src={videoSrc}
               poster={posterUrl}
               title={episode?.title || (content as Movie).title}
               onNext={handleNextEpisode}
               onEnded={handleNextEpisode}
               className="h-full"
-            />
+            />)}
           </div>
         </div>
 

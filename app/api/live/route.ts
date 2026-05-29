@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { adminGuard } from "@/lib/auth";
 
 export async function GET() {
   try {
@@ -15,6 +16,8 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
+    const { error } = await adminGuard();
+    if (error) return error;
     const body = await request.json();
     const stream = await prisma.liveStream.create({
       data: {

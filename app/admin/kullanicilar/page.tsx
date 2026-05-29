@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Trash2, Shield, ShieldOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 
@@ -8,12 +9,14 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("/api/admin/users")
-      .then(r => r.json())
-      .then(d => { if (d.success) setUsers(d.data); })
-      .finally(() => setLoading(false));
+  const fetchUsers = useCallback(async () => {
+    const res = await fetch("/api/admin/users");
+    const d = await res.json();
+    if (d.success) setUsers(d.data);
+    setLoading(false);
   }, []);
+
+  useEffect(() => { fetchUsers(); }, [fetchUsers]);
 
   const toggleStatus = async (user: any) => {
     const res = await fetch("/api/admin/users", {
@@ -26,6 +29,33 @@ export default function AdminUsersPage() {
       toast.success("Kullanıcı güncellendi");
       setUsers(users.map(u => u.id === user.id ? { ...u, isActive: !u.isActive } : u));
     } else toast.error(d.error);
+  };
+
+  const toggleRole = async (user: any) => {
+    const newRole = user.role === "ADMIN" ? "USER" : "ADMIN";
+    if (!confirm(`${user.email} kullanıcısını ${newRole === "ADMIN" ? "admin" : "kullanıcı"} yapmak istediğinize emin misiniz?`)) return;
+    const res = await fetch("/api/admin/users", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: user.id, isActive: user.isActive, role: newRole }),
+    });
+    const d = await res.json();
+    if (d.success) {
+      toast.success(`Rol ${newRole} olarak güncellendi`);
+      setUsers(users.map(u => u.id === user.id ? { ...u, role: newRole } : u));
+    } else toast.error(d.error);
+  };
+
+  const handleDelete = async (id: string, email: string) => {
+    if (!confirm(`${email} kullanıcısını silmek istediğinize emin misiniz? Bu işlem geri alınamaz.`)) return;
+    const res = await fetch(`/api/admin/users`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    const d = await res.json();
+    if (d.success) { toast.success("Kullanıcı silindi"); fetchUsers(); }
+    else toast.error(d.error);
   };
 
   return (
@@ -67,9 +97,17 @@ export default function AdminUsersPage() {
                     </span>
                   </td>
                   <td className="p-4 text-right">
-                    <Button size="sm" variant="outline" onClick={() => toggleStatus(u)}>
-                      {u.isActive ? "Pasif Yap" : "Aktif Yap"}
-                    </Button>
+                    <div className="flex items-center justify-end gap-1">
+                      <Button size="sm" variant="ghost" onClick={() => toggleRole(u)} title="Rol değiştir">
+                        {u.role === "ADMIN" ? <ShieldOff className="h-4 w-4 text-yellow-500" /> : <Shield className="h-4 w-4 text-muted-foreground" />}
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => toggleStatus(u)}>
+                        {u.isActive ? "Pasif Yap" : "Aktif Yap"}
+                      </Button>
+                      <Button size="sm" variant="ghost" className="text-red-500" onClick={() => handleDelete(u.id, u.email)}>
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </td>
                 </tr>
               ))}

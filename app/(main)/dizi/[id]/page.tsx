@@ -59,7 +59,7 @@ export default function SeriesDetailPage() {
 
   const seasons = [...new Set(series.episodes?.map((e: Episode) => e.seasonNumber) || [])].sort();
   const currentEpisodes = series.episodes?.filter((e: Episode) => e.seasonNumber === activeSeason) || [];
-  const actors = series.actors?.map((sa: { actor: Actor }) => sa.actor) || [];
+  const actors = (series.actors as unknown as { actor: Actor }[])?.map((sa) => sa.actor) || [];
 
   return (
     <div className="min-h-screen">

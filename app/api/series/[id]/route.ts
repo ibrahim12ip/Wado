@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { adminGuard } from "@/lib/auth";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const series = await prisma.series.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         category: true,
         episodes: { orderBy: [{ seasonNumber: "asc" }, { episodeNumber: "asc" }] },
@@ -40,18 +42,29 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { error } = await adminGuard();
+    if (error) return error;
+    const { id } = await params;
     const body = await request.json();
+    if (body.actorIds) {
+      await prisma.seriesActor.deleteMany({ where: { seriesId: id } });
+      await prisma.seriesActor.createMany({
+        data: (body.actorIds as string[]).map((actorId: string, idx: number) => ({ seriesId: id, actorId, order: idx })),
+      });
+    }
     const series = await prisma.series.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         title: body.title,
         description: body.description,
         posterUrl: body.posterUrl,
         backdropUrl: body.backdropUrl,
         trailerUrl: body.trailerUrl,
+        videoUrl: body.videoUrl,
+        hlsUrl: body.hlsUrl,
         year: body.year ? parseInt(body.year) : null,
         imdbRating: body.imdbRating ? parseFloat(body.imdbRating) : null,
         contentRating: body.contentRating,
@@ -59,7 +72,7 @@ export async function PUT(
         isActive: body.isActive,
         categoryId: body.categoryId,
       },
-      include: { category: true },
+      include: { category: true, actors: { include: { actor: true } } },
     });
 
     return NextResponse.json({ success: true, data: series });
@@ -73,10 +86,13 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await prisma.series.delete({ where: { id: params.id } });
+    const { error } = await adminGuard();
+    if (error) return error;
+    const { id } = await params;
+    await prisma.series.delete({ where: { id } });
     return NextResponse.json({ success: true, message: "Dizi silindi" });
   } catch (error) {
     return NextResponse.json(

@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { adminGuard } from "@/lib/auth";
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const movie = await prisma.movie.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         category: true,
         actors: { include: { actor: true }, orderBy: { order: "asc" } },
@@ -18,11 +20,20 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { error } = await adminGuard();
+    if (error) return error;
+    const { id } = await params;
     const body = await request.json();
+    if (body.actorIds) {
+      await prisma.movieActor.deleteMany({ where: { movieId: id } });
+      await prisma.movieActor.createMany({
+        data: (body.actorIds as string[]).map((actorId: string, idx: number) => ({ movieId: id, actorId, order: idx })),
+      });
+    }
     const movie = await prisma.movie.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         title: body.title, description: body.description, posterUrl: body.posterUrl,
         backdropUrl: body.backdropUrl, trailerUrl: body.trailerUrl, videoUrl: body.videoUrl,
@@ -32,6 +43,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
         contentRating: body.contentRating, featured: body.featured, isActive: body.isActive,
         categoryId: body.categoryId,
       },
+      include: { category: true, actors: { include: { actor: true } } },
     });
     return NextResponse.json({ success: true, data: movie });
   } catch (error) {
@@ -39,9 +51,12 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
-    await prisma.movie.delete({ where: { id: params.id } });
+    const { error } = await adminGuard();
+    if (error) return error;
+    const { id } = await params;
+    await prisma.movie.delete({ where: { id } });
     return NextResponse.json({ success: true, message: "Film silindi" });
   } catch (error) {
     return NextResponse.json({ success: false, error: "Film silinirken hata oluştu" }, { status: 500 });

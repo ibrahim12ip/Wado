@@ -21,6 +21,7 @@ import {
   Clock,
   Settings,
   LogOut,
+  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -149,6 +150,19 @@ export function Header() {
                           {item.label}
                         </Link>
                       ))}
+                      {(session?.user as { role?: string })?.role === "ADMIN" && (
+                        <>
+                          <div className="border-t border-white/10 mt-1 pt-1" />
+                          <Link
+                            href="/admin/dashboard"
+                            className="flex items-center gap-3 px-3 py-2 text-sm text-wado-400 hover:text-wado-300 hover:bg-wado-600/10 rounded-lg transition-colors"
+                            onClick={() => setShowProfileMenu(false)}
+                          >
+                            <Shield className="h-4 w-4" />
+                            Admin Paneli
+                          </Link>
+                        </>
+                      )}
                       <div className="border-t border-white/10 mt-1 pt-1">
                         <Link
                           href="/api/auth/signout"

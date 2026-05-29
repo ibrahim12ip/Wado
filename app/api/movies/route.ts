@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/utils";
+import { adminGuard } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   try {
@@ -33,7 +34,10 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const { error } = await adminGuard();
+    if (error) return error;
     const body = await request.json();
+    const actorIds: string[] = body.actorIds || [];
     const movie = await prisma.movie.create({
       data: {
         title: body.title,
@@ -50,8 +54,11 @@ export async function POST(request: NextRequest) {
         contentRating: body.contentRating,
         featured: body.featured || false,
         categoryId: body.categoryId || null,
+        actors: {
+          create: actorIds.map((actorId: string, idx: number) => ({ actorId, order: idx })),
+        },
       },
-      include: { category: true },
+      include: { category: true, actors: { include: { actor: true } } },
     });
     return NextResponse.json({ success: true, data: movie }, { status: 201 });
   } catch (error) {

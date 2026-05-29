@@ -38,3 +38,19 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ success: false, error: "Kullanıcı güncellenirken hata oluştu" }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const admin = await getCurrentUser();
+    if (!admin || admin.role !== "ADMIN") {
+      return NextResponse.json({ success: false, error: "Yetkisiz erişim" }, { status: 403 });
+    }
+
+    const body = await request.json();
+    await prisma.user.delete({ where: { id: body.id } });
+
+    return NextResponse.json({ success: true, message: "Kullanıcı silindi" });
+  } catch (error) {
+    return NextResponse.json({ success: false, error: "Kullanıcı silinirken hata oluştu" }, { status: 500 });
+  }
+}

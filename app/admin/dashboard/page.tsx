@@ -80,6 +80,29 @@ export default function AdminDashboard() {
         </div>
 
         <div className="glass-dark rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-white mb-4">Son Eklenen Filmler</h2>
+          {loading ? (
+            <div className="space-y-3">{[...Array(5)].map((_, i) => <div key={i} className="h-12 bg-white/5 rounded-lg animate-pulse" />)}</div>
+          ) : recentMovies.length === 0 ? (
+            <p className="text-muted-foreground text-sm">Henüz film eklenmemiş</p>
+          ) : (
+            <div className="space-y-2">
+              {recentMovies.map((m: any) => (
+                <div key={m.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors">
+                  <div className="h-10 w-7 rounded overflow-hidden bg-white/5 flex-shrink-0">
+                    {m.posterUrl && <img src={m.posterUrl} alt="" className="h-full w-full object-cover" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white truncate">{m.title}</p>
+                    <p className="text-xs text-muted-foreground">{m.category?.name || "Kategorisiz"}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="glass-dark rounded-xl p-6">
           <h2 className="text-lg font-semibold text-white mb-4">Son Kullanıcılar</h2>
           {loading ? (
             <div className="space-y-3">{[...Array(5)].map((_, i) => <div key={i} className="h-12 bg-white/5 rounded-lg animate-pulse" />)}</div>

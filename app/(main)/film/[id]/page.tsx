@@ -50,7 +50,7 @@ export default function MovieDetailPage() {
   if (loading) return <DetailSkeleton />;
   if (!movie) return <div className="min-h-screen flex items-center justify-center"><p className="text-muted-foreground">Film bulunamadı</p></div>;
 
-  const actors = movie.actors?.map((ma: { actor: Actor }) => ma.actor) || [];
+  const actors = (movie.actors as unknown as { actor: Actor }[])?.map((ma) => ma.actor) || [];
 
   return (
     <div className="min-h-screen">

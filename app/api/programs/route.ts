@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { slugify } from "@/lib/utils";
+import { adminGuard } from "@/lib/auth";
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,6 +23,8 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const { error } = await adminGuard();
+    if (error) return error;
     const body = await request.json();
     const program = await prisma.program.create({
       data: {

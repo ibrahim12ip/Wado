@@ -17,6 +17,8 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<any[]>([]);
+  const [allActors, setAllActors] = useState<any[]>([]);
+  const [selectedActors, setSelectedActors] = useState<string[]>([]);
   const [form, setForm] = useState({
     title: initialData?.title || "",
     description: initialData?.description || "",
@@ -36,7 +38,15 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
 
   useEffect(() => {
     fetch("/api/categories").then(r => r.json()).then(d => { if (d.success) setCategories(d.data); });
-  }, []);
+    fetch("/api/actors").then(r => r.json()).then(d => {
+      if (d.success) {
+        setAllActors(d.data || []);
+        if (isEditing && initialData?.actors) {
+          setSelectedActors(initialData.actors.map((sa: any) => sa.actor?.id || sa.actorId));
+        }
+      }
+    });
+  }, [isEditing, initialData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +59,7 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
       const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, actorIds: selectedActors }),
       });
       const data = await res.json();
       if (data.success) {
@@ -66,6 +76,12 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
   };
 
   const updateField = (field: string, value: any) => setForm((prev) => ({ ...prev, [field]: value }));
+
+  const toggleActor = (actorId: string) => {
+    setSelectedActors((prev) =>
+      prev.includes(actorId) ? prev.filter((id) => id !== actorId) : [...prev, actorId]
+    );
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -115,18 +131,52 @@ export function ContentForm({ type, initialData, isEditing }: ContentFormProps) 
             <label className="text-sm text-white">Trailer URL</label>
             <Input value={form.trailerUrl} onChange={(e) => updateField("trailerUrl", e.target.value)} placeholder="https://..." />
           </div>
-          {type !== "series" && (
+          {type !== "program" && (
             <div className="space-y-2">
               <label className="text-sm text-white">Video URL</label>
               <Input value={form.videoUrl} onChange={(e) => updateField("videoUrl", e.target.value)} placeholder="https://..." />
             </div>
           )}
-          <div className="space-y-2">
-            <label className="text-sm text-white">HLS URL</label>
-            <Input value={form.hlsUrl} onChange={(e) => updateField("hlsUrl", e.target.value)} placeholder="https://..." />
-          </div>
+          {type !== "program" && (
+            <div className="space-y-2">
+              <label className="text-sm text-white">HLS URL</label>
+              <Input value={form.hlsUrl} onChange={(e) => updateField("hlsUrl", e.target.value)} placeholder="https://..." />
+            </div>
+          )}
         </div>
       </div>
+
+      {type !== "program" && (
+        <div className="glass-dark rounded-xl p-6 space-y-4">
+          <h2 className="text-lg font-semibold text-white">Oyuncular</h2>
+          {allActors.length === 0 ? (
+            <p className="text-sm text-muted-foreground">Henüz oyuncu eklenmemiş. Önce oyuncu ekleyin.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {allActors.map((actor: any) => {
+                const isSelected = selectedActors.includes(actor.id);
+                return (
+                  <button
+                    key={actor.id}
+                    type="button"
+                    onClick={() => toggleActor(actor.id)}
+                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm transition-colors ${
+                      isSelected
+                        ? "bg-wado-600/30 text-wado-400 border border-wado-500/40"
+                        : "bg-white/5 text-muted-foreground border border-white/10 hover:border-white/20"
+                    }`}
+                  >
+                    {actor.imageUrl && (
+                      <img src={actor.imageUrl} alt="" className="h-5 w-5 rounded-full object-cover" />
+                    )}
+                    {actor.name}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="glass-dark rounded-xl p-6 space-y-4">
         <h2 className="text-lg font-semibold text-white">Detaylar</h2>

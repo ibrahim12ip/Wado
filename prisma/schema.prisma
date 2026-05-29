@@ -108,6 +108,8 @@ model Series {
   posterUrl     String?
   backdropUrl   String?
   trailerUrl    String?
+  videoUrl      String?
+  hlsUrl        String?
   year          Int?
   imdbRating    Float?
   contentRating String?
