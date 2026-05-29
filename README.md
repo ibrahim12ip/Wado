@@ -1,5 +1,10 @@
 # Wado Platform
 
+![Wado](public/images/wado-logo.svg)
+
+**Live:** [wado-platform.vercel.app](https://wado-platform.vercel.app)  
+**GitHub:** [github.com/ibrahim12ip/Wado](https://github.com/ibrahim12ip/Wado)
+
 Premium dizi, film ve canlı yayın platformu. NOW TV, Netflix, BluTV seviyesinde modern bir streaming deneyimi.
 
 ## 🚀 Özellikler
