@@ -142,7 +142,9 @@ export default function WatchPage() {
                 <MonitorPlay className="h-16 w-16 text-white/20" />
                 <p className="text-white/60 text-lg font-medium">Bu içerik için video bulunamadı</p>
                 <p className="text-white/40 text-sm text-center max-w-md">
-                  Admin panelden dizi/film URL'si ekleyin veya geçerli bir HLS video adresi girin.
+                  {type === "seri" || type === "series"
+                    ? "Bu diziye ait bölüm ve video eklenmemiş. Admin panelden bölüm ekleyip video yükleyin."
+                    : "Bu filme video eklenmemiş. Admin panelden filmi düzenleyip video yükleyin."}
                 </p>
                 <Link href={`/${type === "seri" ? "dizi" : "film"}/${id}`} className="mt-4">
                   <Button variant="outline" className="border-white/20 text-white/80">Detaylara Dön</Button>
