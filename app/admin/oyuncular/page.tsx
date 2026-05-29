@@ -89,7 +89,7 @@ export default function AdminActorsPage() {
           {actors.map((a: any) => (
             <div key={a.id} className="glass-dark rounded-xl p-4 text-center group relative">
               <div className="h-20 w-20 rounded-full mx-auto overflow-hidden border-2 border-white/10 group-hover:border-wado-500 transition-all mb-3">
-                <img src={a.photoUrl || "/images/placeholder-actor.jpg"} alt={a.name} className="h-full w-full object-cover" />
+                <img src={a.photoUrl || "/images/placeholder-actor.svg"} alt={a.name} className="h-full w-full object-cover" />
               </div>
               <p className="text-sm text-white font-medium truncate">{a.name}</p>
               <p className="text-xs text-muted-foreground">{a._count?.series || 0} dizi, {a._count?.movies || 0} film</p>

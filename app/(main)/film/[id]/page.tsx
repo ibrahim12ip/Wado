@@ -118,7 +118,7 @@ export default function MovieDetailPage() {
                     {actors.map((actor: Actor) => (
                       <Link key={actor.id} href={`/oyuncu/${actor.id}`} className="flex-shrink-0 text-center group">
                         <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-wado-500 transition-all mx-auto">
-                          <Image src={actor.photoUrl || "/images/placeholder-actor.jpg"} alt={actor.name} width={80} height={80} className="object-cover h-full w-full group-hover:scale-110 transition-transform" />
+                          <Image src={actor.photoUrl || "/images/placeholder-actor.svg"} alt={actor.name} width={80} height={80} className="object-cover h-full w-full group-hover:scale-110 transition-transform" />
                         </div>
                         <p className="text-xs text-white mt-2 group-hover:text-wado-400 transition-colors">{actor.name}</p>
                       </Link>

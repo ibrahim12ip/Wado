@@ -3,28 +3,16 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Play,
-  Pause,
-  Volume2,
-  VolumeX,
-  Maximize,
-  Minimize,
-  SkipForward,
-  SkipBack,
-  Settings,
-  Subtitles,
-  List,
-  ChevronRight,
+  Play, Pause, Volume2, VolumeX, Maximize, Minimize,
+  SkipForward, SkipBack, Settings, Subtitles,
 } from "lucide-react";
 import { cn, formatDuration } from "@/lib/utils";
-import { usePlayerStore } from "@/store";
+import Hls from "hls.js";
 
 interface VideoPlayerProps {
   src: string;
   poster?: string;
   title?: string;
-  subtitles?: Array<{ label: string; src: string; srclang: string }>;
-  qualities?: Array<{ label: string; src: string }>;
   onNext?: () => void;
   onPrevious?: () => void;
   onEnded?: () => void;
@@ -32,18 +20,11 @@ interface VideoPlayerProps {
 }
 
 export function VideoPlayer({
-  src,
-  poster,
-  title,
-  subtitles,
-  qualities,
-  onNext,
-  onPrevious,
-  onEnded,
-  className,
+  src, poster, title, onNext, onPrevious, onEnded, className,
 }: VideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const hlsRef = useRef<Hls | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -51,19 +32,62 @@ export function VideoPlayer({
   const [isMuted, setIsMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [showControls, setShowControls] = useState(true);
-  const [showSettings, setShowSettings] = useState(false);
   const [showQualityMenu, setShowQualityMenu] = useState(false);
   const [currentQuality, setCurrentQuality] = useState("auto");
   const [bufferProgress, setBufferProgress] = useState(0);
   const controlsTimeout = useRef<NodeJS.Timeout>();
 
+  const isHls = src?.endsWith(".m3u8");
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !src) return;
+
+    if (hlsRef.current) {
+      hlsRef.current.destroy();
+      hlsRef.current = null;
+    }
+
+    if (isHls && Hls.isSupported()) {
+      const hls = new Hls();
+      hlsRef.current = hls;
+      hls.loadSource(src);
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play().catch(() => {});
+      });
+      hls.on(Hls.Events.ERROR, (_event, data) => {
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              hls.startLoad();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              hls.recoverMediaError();
+              break;
+            default:
+              break;
+          }
+        }
+      });
+    } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = src;
+    } else {
+      video.src = src;
+    }
+
+    return () => {
+      if (hlsRef.current) {
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+    };
+  }, [src, isHls]);
+
   const togglePlay = useCallback(() => {
     if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-    } else {
-      videoRef.current.play();
-    }
+    if (isPlaying) videoRef.current.pause();
+    else videoRef.current.play();
     setIsPlaying(!isPlaying);
   }, [isPlaying]);
 
@@ -139,13 +163,14 @@ export function VideoPlayer({
     >
       <video
         ref={videoRef}
-        src={src}
         poster={poster}
         className="w-full h-full object-contain cursor-pointer"
         onClick={togglePlay}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={() => { setIsPlaying(false); onEnded?.(); }}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         onProgress={() => {
           if (!videoRef.current?.buffered.length) return;
           const bufferedEnd = videoRef.current.buffered.end(videoRef.current.buffered.length - 1);
@@ -194,66 +219,33 @@ export function VideoPlayer({
             <div className="p-4 space-y-2">
               <div className="relative h-1 group cursor-pointer">
                 <div className="absolute inset-0 bg-white/20 rounded-full">
-                  <div
-                    className="h-full bg-white/40 rounded-full"
-                    style={{ width: `${bufferProgress}%` }}
-                  />
+                  <div className="h-full bg-white/40 rounded-full" style={{ width: `${bufferProgress}%` }} />
                 </div>
                 <input
-                  type="range"
-                  min={0}
-                  max={duration}
-                  value={currentTime}
+                  type="range" min={0} max={duration} value={currentTime}
                   onChange={handleSeek}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                 />
-                <div
-                  className="h-full bg-wado-500 rounded-full relative"
-                  style={{ width: `${progress}%` }}
-                >
+                <div className="h-full bg-wado-500 rounded-full relative" style={{ width: `${progress}%` }}>
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-wado-500 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <button
-                    onClick={togglePlay}
-                    className="text-white hover:text-wado-500 transition-colors"
-                  >
+                  <button onClick={togglePlay} className="text-white hover:text-wado-500 transition-colors">
                     {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
                   </button>
-
                   <button onClick={toggleMute} className="text-white hover:text-wado-500 transition-colors">
-                    {isMuted || volume === 0 ? (
-                      <VolumeX className="h-5 w-5" />
-                    ) : (
-                      <Volume2 className="h-5 w-5" />
-                    )}
+                    {isMuted || volume === 0 ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
                   </button>
-
-                  <input
-                    type="range"
-                    min={0}
-                    max={1}
-                    step={0.05}
-                    value={volume}
-                    onChange={handleVolumeChange}
-                    className="w-20 h-1 accent-wado-500"
-                  />
-
+                  <input type="range" min={0} max={1} step={0.05} value={volume} onChange={handleVolumeChange} className="w-20 h-1 accent-wado-500" />
                   <span className="text-sm text-white/80">
                     {formatDuration(Math.floor(currentTime))} / {formatDuration(Math.floor(duration))}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  {subtitles && subtitles.length > 0 && (
-                    <button className="text-white/80 hover:text-white transition-colors">
-                      <Subtitles className="h-5 w-5" />
-                    </button>
-                  )}
-
                   <div className="relative">
                     <button
                       onClick={() => setShowQualityMenu(!showQualityMenu)}
@@ -286,10 +278,7 @@ export function VideoPlayer({
                     </AnimatePresence>
                   </div>
 
-                  <button
-                    onClick={toggleFullscreen}
-                    className="text-white/80 hover:text-white transition-colors"
-                  >
+                  <button onClick={toggleFullscreen} className="text-white/80 hover:text-white transition-colors">
                     {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
                   </button>
                 </div>

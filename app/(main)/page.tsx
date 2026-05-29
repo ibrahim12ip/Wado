@@ -200,7 +200,7 @@ export default function HomePage() {
               >
                 <div className="relative h-32 w-32 mx-auto rounded-full overflow-hidden border-2 border-white/10 group-hover:border-wado-500 transition-all">
                   <img
-                    src={actor.photoUrl || "/images/placeholder-actor.jpg"}
+                    src={actor.photoUrl || "/images/placeholder-actor.svg"}
                     alt={actor.name}
                     className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-300"
                   />
